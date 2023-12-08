@@ -4,6 +4,7 @@
  */
 package miterapp.services;
 
+import java.util.List;
 import java.util.UUID;
 import miterapp.models.User;
 
@@ -12,6 +13,7 @@ import miterapp.models.User;
  * @author begoingtodev
  */
 public interface UserService {
+    List<User> getAll();
     User addUser(User user);
     void updateUser(User user);
     void deleteUser(User user);

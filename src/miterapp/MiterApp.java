@@ -15,6 +15,8 @@ public class MiterApp {
      */
     public static void main(String[] args) {
         // TODO code application logic here
+        UserList userList = new UserList();
+        userList.setVisible(true);
     }
     
 }

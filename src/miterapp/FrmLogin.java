@@ -4,8 +4,6 @@
  */
 package miterapp;
 
-import com.formdev.flatlaf.intellijthemes.FlatArcDarkOrangeIJTheme;
-import com.formdev.flatlaf.intellijthemes.materialthemeuilite.FlatAtomOneLightIJTheme;
 import com.formdev.flatlaf.themes.FlatMacLightLaf;
 import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
@@ -148,10 +146,10 @@ public class FrmLogin extends javax.swing.JFrame {
          */
         try {
             UIManager.setLookAndFeel(new FlatMacLightLaf());
-            UIManager.put("Button.arc", 999);
-            UIManager.put("Component.arc", 999);
-            UIManager.put("ProgressBar.arc", 999);
-            UIManager.put("TextComponent.arc", 999);
+            UIManager.put("Button.arc", 8);
+            UIManager.put("Component.arc", 8);
+            UIManager.put("ProgressBar.arc", 8);
+            UIManager.put("TextComponent.arc", 8);
         } catch (UnsupportedLookAndFeelException e) {
 //            throw new IllegalAccessError(e.getMessage());
         }

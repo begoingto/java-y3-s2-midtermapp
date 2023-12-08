@@ -170,7 +170,7 @@ public class FrmUserAdd extends javax.swing.JFrame {
     private void btnClodeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnClodeActionPerformed
         // TODO add your handling code here:
         this.dispose();
-        System.exit(0);
+//        System.exit(0);
     }//GEN-LAST:event_btnClodeActionPerformed
 
     private void btnAddActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddActionPerformed
@@ -178,12 +178,21 @@ public class FrmUserAdd extends javax.swing.JFrame {
         User user = new User();
         user.setUuid(UUID.fromString(this.txtUuid.getText()));
         user.setFullName(this.txtFullName.getText());
-        user.setGender(null);
+        user.setGender(this.cbGender.getSelectedItem().toString());
         user.setPassword(this.txtPassword.getText());
         this.userRepo.addUser(user);
-        JOptionPane.showMessageDialog(rootPane, user.toString());
+        JOptionPane.showMessageDialog(rootPane, "You have been add successfully");
+        this.clearForm();
+//        this.dispose();
     }//GEN-LAST:event_btnAddActionPerformed
 
+    private void clearForm(){
+        this.txtUuid.setText(UUID.randomUUID().toString());
+        this.txtUsername.setText("");
+        this.txtFullName.setText("");
+        this.txtPassword.setText("");
+    }
+    
     private void checkShowPasswordActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_checkShowPasswordActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_checkShowPasswordActionPerformed
