@@ -177,6 +177,7 @@ public class FrmUserAdd extends javax.swing.JFrame {
         // TODO add your handling code here:
         User user = new User();
         user.setUuid(UUID.fromString(this.txtUuid.getText()));
+        user.setUsername(this.txtUsername.getText());
         user.setFullName(this.txtFullName.getText());
         user.setGender(this.cbGender.getSelectedItem().toString());
         user.setPassword(this.txtPassword.getText());

@@ -7,6 +7,7 @@ package miterapp;
 import com.formdev.flatlaf.themes.FlatMacLightLaf;
 import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
+import miterapp.models.User;
 import miterapp.repositories.UserRepoitory;
 
 /**
@@ -24,7 +25,15 @@ public class UserList extends javax.swing.JFrame {
         this.setLocationRelativeTo(null);
         this.setResizable(false);
         this.userRepo = new UserRepoitory();
-        this.userRepo.data.get("users");
+        int i = 0;
+        for(User user: this.userRepo.users){
+            this.tblUser.setValueAt(user.getUuid(), i, 0);
+            this.tblUser.setValueAt(user.getUsername(), i, 1);
+            this.tblUser.setValueAt(user.getFullName(), i, 2);
+            this.tblUser.setValueAt(user.getGender(), i, 3);
+            this.tblUser.setValueAt(user.getPassword(), i, 4);
+            i++;
+        }
     }
 
     /**
