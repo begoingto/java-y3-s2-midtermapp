@@ -11,6 +11,7 @@ import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.lang.reflect.Type;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -29,16 +30,16 @@ public class UserRepoitory implements UserService{
     private final Gson gson = new Gson();
     public Map<String,List<User>> data = new HashMap<>();
     public List<User> users = new ArrayList<>();
+    private String path = Paths.get("").toAbsolutePath().toString();
     
     public UserRepoitory(){
         data.put("users", users);
         Type mapType = new TypeToken<Map<String, List<User>>>(){}.getType();
         // Read the JSON file to the map of the specified type
-        try (FileReader reader = new FileReader("D:\\_semII-3\\java\\MiterApp\\src\\miterapp\\data\\user.json")) {
+        try (FileReader reader = new FileReader(path+"/data/user.json")) {
             data = gson.fromJson(reader, mapType);
-            users.addAll(data.get("users"));
+            users.addAll(data.get("data"));
             // Do something with the map, like printing it to the console
-            System.out.println("Data :"+ data);
         } catch (IOException e) {
             System.out.println("Error read: "+ e.getMessage());
         }
@@ -51,7 +52,7 @@ public class UserRepoitory implements UserService{
         data.put("users", users);
         String usersJson = gson.toJson(data);
         System.out.println("usersJson :"+ usersJson);
-        try (FileWriter writer = new FileWriter("D:\\_semII-3\\java\\MiterApp\\src\\miterapp\\data\\user.json")) {
+        try (FileWriter writer = new FileWriter(path+"/data/user.json")) {
             writer.write(usersJson);
         } catch (IOException e) {
            throw new UnsupportedOperationException("Not supported yet.");
@@ -78,7 +79,7 @@ public class UserRepoitory implements UserService{
     public List<User> getAll() {
         try {
             Type userListType = new TypeToken<List<User>>() {}.getType();
-            List<User> userList = gson.fromJson(new FileReader("D:\\_semII-3\\java\\MiterApp\\src\\miterapp\\data\\user.json"), userListType);
+            List<User> userList = gson.fromJson(new FileReader(path+"/data/user.json"), userListType);
             return userList;
         } catch (FileNotFoundException ex) {
             Logger.getLogger(UserRepoitory.class.getName()).log(Level.SEVERE, null, ex);

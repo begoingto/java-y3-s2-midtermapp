@@ -25,6 +25,7 @@ public class UserList extends javax.swing.JFrame {
         this.setLocationRelativeTo(null);
         this.setResizable(false);
         this.userRepo = new UserRepoitory();
+        System.out.println("Data users: "+ this.userRepo.users.size());
         int i = 0;
         for(User user: this.userRepo.users){
             this.tblUser.setValueAt(user.getUuid(), i, 0);
