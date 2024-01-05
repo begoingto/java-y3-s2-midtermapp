@@ -1,27 +1,20 @@
 /*
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
+ * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JInternalFrame.java to edit this template
  */
-package miterapp;
-
-import com.formdev.flatlaf.themes.FlatMacLightLaf;
-import javax.swing.UIManager;
-import javax.swing.UnsupportedLookAndFeelException;
+package miterapp.internal;
 
 /**
  *
  * @author begoingtodev
  */
-public class FrmQuestion extends javax.swing.JFrame {
+public class AddQuestion extends javax.swing.JInternalFrame {
 
     /**
-     * Creates new form FrmQuestion
+     * Creates new form AddQuestion
      */
-    public FrmQuestion() {
+    public AddQuestion() {
         initComponents();
-        this.setTitle("Form Question");
-        this.setLocationRelativeTo(null);
-        this.setResizable(false);
     }
 
     /**
@@ -33,41 +26,28 @@ public class FrmQuestion extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jLabel1 = new javax.swing.JLabel();
-        jLabel2 = new javax.swing.JLabel();
-        jTextField1 = new javax.swing.JTextField();
-        jLabel3 = new javax.swing.JLabel();
-        jTextField2 = new javax.swing.JTextField();
-        jLabel4 = new javax.swing.JLabel();
+        jButton2 = new javax.swing.JButton();
         jTextField3 = new javax.swing.JTextField();
         jLabel5 = new javax.swing.JLabel();
         jTextField4 = new javax.swing.JTextField();
         jLabel6 = new javax.swing.JLabel();
         jTextField5 = new javax.swing.JTextField();
+        jLabel1 = new javax.swing.JLabel();
         jLabel7 = new javax.swing.JLabel();
+        jLabel2 = new javax.swing.JLabel();
         jTextField6 = new javax.swing.JTextField();
+        jTextField1 = new javax.swing.JTextField();
         jLabel8 = new javax.swing.JLabel();
+        jLabel3 = new javax.swing.JLabel();
         jTextField7 = new javax.swing.JTextField();
+        jTextField2 = new javax.swing.JTextField();
         jButton1 = new javax.swing.JButton();
-        jButton2 = new javax.swing.JButton();
+        jLabel4 = new javax.swing.JLabel();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setBorder(javax.swing.BorderFactory.createEmptyBorder(0, 0, 0, 0));
 
-        jLabel1.setFont(new java.awt.Font("Kantumruy Pro", 1, 24)); // NOI18N
-        jLabel1.setText("Add Question");
-
-        jLabel2.setFont(new java.awt.Font("Kantumruy Pro", 1, 14)); // NOI18N
-        jLabel2.setText("Level");
-
-        jTextField1.setFont(new java.awt.Font("Kantumruy Pro", 0, 14)); // NOI18N
-
-        jLabel3.setFont(new java.awt.Font("Kantumruy Pro", 1, 14)); // NOI18N
-        jLabel3.setText("Question");
-
-        jTextField2.setFont(new java.awt.Font("Kantumruy Pro", 0, 14)); // NOI18N
-
-        jLabel4.setFont(new java.awt.Font("Kantumruy Pro", 1, 14)); // NOI18N
-        jLabel4.setText("Answer1");
+        jButton2.setBackground(new java.awt.Color(255, 153, 153));
+        jButton2.setText("Clear");
 
         jTextField3.setFont(new java.awt.Font("Kantumruy Pro", 0, 14)); // NOI18N
 
@@ -81,38 +61,52 @@ public class FrmQuestion extends javax.swing.JFrame {
 
         jTextField5.setFont(new java.awt.Font("Kantumruy Pro", 0, 14)); // NOI18N
 
+        jLabel1.setFont(new java.awt.Font("Kantumruy Pro", 1, 24)); // NOI18N
+        jLabel1.setText("Add Question");
+
         jLabel7.setFont(new java.awt.Font("Kantumruy Pro", 1, 14)); // NOI18N
         jLabel7.setText("Answer4");
 
+        jLabel2.setFont(new java.awt.Font("Kantumruy Pro", 1, 14)); // NOI18N
+        jLabel2.setText("Level");
+
         jTextField6.setFont(new java.awt.Font("Kantumruy Pro", 0, 14)); // NOI18N
+
+        jTextField1.setFont(new java.awt.Font("Kantumruy Pro", 0, 14)); // NOI18N
 
         jLabel8.setFont(new java.awt.Font("Kantumruy Pro", 1, 14)); // NOI18N
         jLabel8.setText("Currect Answer");
 
+        jLabel3.setFont(new java.awt.Font("Kantumruy Pro", 1, 14)); // NOI18N
+        jLabel3.setText("Question");
+
         jTextField7.setFont(new java.awt.Font("Kantumruy Pro", 0, 14)); // NOI18N
+
+        jTextField2.setFont(new java.awt.Font("Kantumruy Pro", 0, 14)); // NOI18N
 
         jButton1.setBackground(new java.awt.Color(153, 255, 153));
         jButton1.setText("Save");
 
-        jButton2.setBackground(new java.awt.Color(255, 153, 153));
-        jButton2.setText("Clear");
+        jLabel4.setFont(new java.awt.Font("Kantumruy Pro", 1, 14)); // NOI18N
+        jLabel4.setText("Answer1");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
+                .addGap(113, 113, 113)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(160, 160, 160)
+                        .addGap(152, 152, 152)
                         .addComponent(jLabel1))
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(79, 79, 79)
+                        .addGap(71, 71, 71)
                         .addComponent(jLabel2)
                         .addGap(18, 18, 18)
                         .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 337, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(55, 55, 55)
+                        .addGap(47, 47, 47)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                 .addGroup(layout.createSequentialGroup()
@@ -137,7 +131,6 @@ public class FrmQuestion extends javax.swing.JFrame {
                                     .addGap(18, 18, 18)
                                     .addComponent(jTextField6, javax.swing.GroupLayout.PREFERRED_SIZE, 337, javax.swing.GroupLayout.PREFERRED_SIZE)))))
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(8, 8, 8)
                         .addComponent(jLabel8)
                         .addGap(18, 18, 18)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -146,12 +139,12 @@ public class FrmQuestion extends javax.swing.JFrame {
                                 .addGap(18, 18, 18)
                                 .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 75, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addComponent(jTextField7, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                .addContainerGap(53, Short.MAX_VALUE))
+                .addContainerGap(129, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
+                .addGap(36, 36, 36)
                 .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
@@ -185,39 +178,12 @@ public class FrmQuestion extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(60, Short.MAX_VALUE))
+                .addContainerGap(101, Short.MAX_VALUE))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    /**
-     * @param args the command line arguments
-     */
-    public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
-        try {
-            UIManager.setLookAndFeel(new FlatMacLightLaf());
-            UIManager.put("Button.arc", 8);
-            UIManager.put("Component.arc", 8);
-            UIManager.put("ProgressBar.arc", 8);
-            UIManager.put("TextComponent.arc", 8);
-        } catch (UnsupportedLookAndFeelException e) {
-//            throw new IllegalAccessError(e.getMessage());
-        }
-        //</editor-fold>
-
-        /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new FrmQuestion().setVisible(true);
-            }
-        });
-    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton1;

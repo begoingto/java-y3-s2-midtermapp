@@ -15,7 +15,9 @@ import miterapp.repositories.UserRepoitory;
  * @author begoingtodev
  */
 public class UserList extends javax.swing.JFrame {
+
     private final UserRepoitory userRepo;
+
     /**
      * Creates new form UserList
      */
@@ -25,15 +27,20 @@ public class UserList extends javax.swing.JFrame {
         this.setLocationRelativeTo(null);
         this.setResizable(false);
         this.userRepo = new UserRepoitory();
-        System.out.println("Data users: "+ this.userRepo.users.size());
-        int i = 0;
-        for(User user: this.userRepo.users){
-            this.tblUser.setValueAt(user.getUuid(), i, 0);
-            this.tblUser.setValueAt(user.getUsername(), i, 1);
-            this.tblUser.setValueAt(user.getFullName(), i, 2);
-            this.tblUser.setValueAt(user.getGender(), i, 3);
-            this.tblUser.setValueAt(user.getPassword(), i, 4);
-            i++;
+        userRepo.LoadData();
+        System.out.println("Data users: " + this.userRepo.users.size());
+        try {
+            int i = 0;
+            for (User user : this.userRepo.users) {
+                this.tblUser.setValueAt(user.getUuid(), i, 0);
+                this.tblUser.setValueAt(user.getUsername(), i, 1);
+                this.tblUser.setValueAt(user.getFullName(), i, 2);
+                this.tblUser.setValueAt(user.getGender(), i, 3);
+                this.tblUser.setValueAt(user.getPassword(), i, 4);
+                i++;
+            }
+        } catch (Exception e) {
+            System.err.println("Erro: " + e.getMessage());
         }
     }
 

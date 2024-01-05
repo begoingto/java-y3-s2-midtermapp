@@ -32,8 +32,8 @@ public class UserRepoitory implements UserService{
     public List<User> users = new ArrayList<>();
     private String path = Paths.get("").toAbsolutePath().toString();
     
-    public UserRepoitory(){
-        data.put("users", users);
+    public void LoadData(){
+        data.put("data", users);
         Type mapType = new TypeToken<Map<String, List<User>>>(){}.getType();
         // Read the JSON file to the map of the specified type
         try (FileReader reader = new FileReader(path+"/data/user.json")) {
@@ -49,7 +49,7 @@ public class UserRepoitory implements UserService{
     @Override
     public User addUser(User user) {
         users.add(user);
-        data.put("users", users);
+        data.put("data", users);
         String usersJson = gson.toJson(data);
         System.out.println("usersJson :"+ usersJson);
         try (FileWriter writer = new FileWriter(path+"/data/user.json")) {
