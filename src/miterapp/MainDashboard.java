@@ -13,6 +13,9 @@ import javax.swing.JInternalFrame;
 import javax.swing.JOptionPane;
 import miterapp.internal.AddQuestion;
 import miterapp.internal.ListQuestion;
+import miterapp.internal.ListUser;
+import miterapp.repositories.UserRepoitory;
+
 
 /**
  *
@@ -20,12 +23,14 @@ import miterapp.internal.ListQuestion;
  */
 public class MainDashboard extends javax.swing.JFrame {
     java.util.List<String> frmOpening = new ArrayList<>();
+    private final UserRepoitory userRepo;
     /**
      * Creates new form MainDashboard
      */
     public MainDashboard() {
         initComponents();
         this.setExtendedState(JFrame.MAXIMIZED_BOTH);
+        this.userRepo = new UserRepoitory();
     }
 
     /**
@@ -45,7 +50,7 @@ public class MainDashboard extends javax.swing.JFrame {
         jMenuItem2 = new javax.swing.JMenuItem();
         jMenuItem1 = new javax.swing.JMenuItem();
         jMenu3 = new javax.swing.JMenu();
-        jMenuItem3 = new javax.swing.JMenuItem();
+        mListUser = new javax.swing.JMenuItem();
         jMenuItem4 = new javax.swing.JMenuItem();
         jMenu4 = new javax.swing.JMenu();
 
@@ -108,8 +113,13 @@ public class MainDashboard extends javax.swing.JFrame {
 
         jMenu3.setText("User");
 
-        jMenuItem3.setText("List User");
-        jMenu3.add(jMenuItem3);
+        mListUser.setText("List User");
+        mListUser.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                mListUserActionPerformed(evt);
+            }
+        });
+        jMenu3.add(mListUser);
 
         jMenuItem4.setText("Add User");
         jMenu3.add(jMenuItem4);
@@ -169,6 +179,15 @@ public class MainDashboard extends javax.swing.JFrame {
         // TODO add your handling code here:
         this.frmOpening.remove(evt.getChild().getName());
     }//GEN-LAST:event_jDesktopPane1ComponentRemoved
+
+    private void mListUserActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mListUserActionPerformed
+        // TODO add your handling code here:
+        var frm = new ListUser();
+        frm.setName("listUser");
+        frm.items = this.userRepo.items;
+        frm.loadDataTable();
+        this.showChild(frm);
+    }//GEN-LAST:event_mListUserActionPerformed
 
     private void showChild(JInternalFrame frm){
         if(frmOpening.contains(frm.getName())){
@@ -230,8 +249,8 @@ public class MainDashboard extends javax.swing.JFrame {
     private javax.swing.JMenuBar jMenuBar1;
     private javax.swing.JMenuItem jMenuItem1;
     private javax.swing.JMenuItem jMenuItem2;
-    private javax.swing.JMenuItem jMenuItem3;
     private javax.swing.JMenuItem jMenuItem4;
     private javax.swing.JMenuItem jMenuItem5;
+    private javax.swing.JMenuItem mListUser;
     // End of variables declaration//GEN-END:variables
 }

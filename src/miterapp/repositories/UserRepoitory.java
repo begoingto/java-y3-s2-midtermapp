@@ -4,59 +4,38 @@
  */
 package miterapp.repositories;
 
-import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
-import java.io.FileWriter;
-import java.io.IOException;
 import java.lang.reflect.Type;
-import java.nio.file.Paths;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 import java.util.UUID;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import miterapp.models.User;
+import miterapp.services.MainService;
 import miterapp.services.UserService;
 
 /**
  *
  * @author begoingtodev
  */
-public class UserRepoitory implements UserService{
-    private final Gson gson = new Gson();
-    public Map<String,List<User>> data = new HashMap<>();
-    public List<User> users = new ArrayList<>();
-    private String path = Paths.get("").toAbsolutePath().toString();
-    
-    public void LoadData(){
-        data.put("data", users);
-        Type mapType = new TypeToken<Map<String, List<User>>>(){}.getType();
-        // Read the JSON file to the map of the specified type
-        try (FileReader reader = new FileReader(path+"/data/user.json")) {
-            data = gson.fromJson(reader, mapType);
-            users.addAll(data.get("data"));
-            // Do something with the map, like printing it to the console
-        } catch (IOException e) {
-            System.out.println("Error read: "+ e.getMessage());
-        }
+public class UserRepoitory extends MainService<User> implements UserService{
+
+    public UserRepoitory() {
+        super("user", User.class);
+        super.LoadData();
     }
     
-
+    
     @Override
     public User addUser(User user) {
+        List<User> users = new ArrayList<>(){{
+            addAll(items);
+        }};
         users.add(user);
-        data.put("data", users);
-        String usersJson = gson.toJson(data);
-        System.out.println("usersJson :"+ usersJson);
-        try (FileWriter writer = new FileWriter(path+"/data/user.json")) {
-            writer.write(usersJson);
-        } catch (IOException e) {
-           throw new UnsupportedOperationException("Not supported yet.");
-        }
+        super.writeItemsToJson(users);
         return user;
     }
 

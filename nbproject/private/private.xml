@@ -5,8 +5,10 @@
         <group>
             <file>file:/D:/_semII-3/java/MiterApp/src/miterapp/MiterApp.java</file>
             <file>file:/D:/_semII-3/java/MiterApp/src/miterapp/repositories/UserRepoitory.java</file>
-            <file>file:/D:/_semII-3/java/MiterApp/src/miterapp/FrmLogin.java</file>
-            <file>file:/D:/_semII-3/java/MiterApp/src/miterapp/MainDashboard.java</file>
+            <file>file:/D:/_semII-3/java/MiterApp/src/miterapp/services/MainService.java</file>
+            <file>file:/D:/_semII-3/java/MiterApp/src/miterapp/UserList.java</file>
+            <file>file:/D:/_semII-3/java/MiterApp/src/miterapp/FrmUserAdd.java</file>
+            <file>file:/D:/_semII-3/java/MiterApp/src/miterapp/repositories/QuestionRepository.java</file>
         </group>
     </open-files>
 </project-private>

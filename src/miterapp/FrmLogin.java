@@ -7,13 +7,13 @@ package miterapp;
 import com.formdev.flatlaf.themes.FlatMacLightLaf;
 import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
+import miterapp.models.User;
 
 /**
  *
  * @author begoingtodev
  */
 public class FrmLogin extends javax.swing.JFrame {
-
     /**
      * Creates new form FrmLogin
      */
@@ -131,8 +131,13 @@ public class FrmLogin extends javax.swing.JFrame {
 
     private void btnLoginActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLoginActionPerformed
         // TODO add your handling code here:
+        if(txtName.getText().trim().equals("admin")){
+            new MainDashboard().setVisible(true);
+        }else{
+            new FrmOnlineExam().setVisible(true);
+        }
         this.dispose();
-        System.exit(0);
+
     }//GEN-LAST:event_btnLoginActionPerformed
 
     /**

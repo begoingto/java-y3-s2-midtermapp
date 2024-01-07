@@ -15,7 +15,6 @@ import miterapp.repositories.UserRepoitory;
  * @author begoingtodev
  */
 public class UserList extends javax.swing.JFrame {
-
     private final UserRepoitory userRepo;
 
     /**
@@ -27,11 +26,11 @@ public class UserList extends javax.swing.JFrame {
         this.setLocationRelativeTo(null);
         this.setResizable(false);
         this.userRepo = new UserRepoitory();
-        userRepo.LoadData();
-        System.out.println("Data users: " + this.userRepo.users.size());
+//        System.out.println("Data users: " + this.userRepo.items);
         try {
+//            DefaultTableModel tbl =(DefaultTableModel)this.tblUser.getModel();
             int i = 0;
-            for (User user : this.userRepo.users) {
+            for (User user : this.userRepo.items) {
                 this.tblUser.setValueAt(user.getUuid(), i, 0);
                 this.tblUser.setValueAt(user.getUsername(), i, 1);
                 this.tblUser.setValueAt(user.getFullName(), i, 2);

@@ -5,7 +5,6 @@
 package miterapp;
 
 import com.formdev.flatlaf.themes.FlatMacLightLaf;
-import javax.swing.JOptionPane;
 import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
 
