@@ -4,17 +4,38 @@
  */
 package miterapp.internal;
 
+import java.util.ArrayList;
+import java.util.List;
+import javax.swing.table.DefaultTableModel;
+import miterapp.models.Question;
+
 /**
  *
  * @author begoingtodev
  */
 public class ListQuestion extends javax.swing.JInternalFrame {
+    public List<Question> items = new ArrayList<>();
 
     /**
      * Creates new form ListQuestion
      */
     public ListQuestion() {
         initComponents();
+    }
+    
+    public void loadDataTable(){
+        DefaultTableModel tbl =(DefaultTableModel)this.tblItem.getModel();
+        for(Question item: items){
+            tbl.addRow(new Object[]{
+                item.getId(),
+                item.getTitle(),
+                item.getCorrectAnswer(),
+                item.getAnswers().get(0),
+                item.getAnswers().get(1),
+                item.getAnswers().get(2),
+                item.getAnswers().get(3)
+            });
+        }
     }
 
     /**
@@ -25,6 +46,9 @@ public class ListQuestion extends javax.swing.JInternalFrame {
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
+
+        jScrollPane2 = new javax.swing.JScrollPane();
+        tblItem = new javax.swing.JTable();
 
         setBorder(javax.swing.BorderFactory.createEmptyBorder(0, 0, 0, 0));
         addInternalFrameListener(new javax.swing.event.InternalFrameListener() {
@@ -45,15 +69,54 @@ public class ListQuestion extends javax.swing.JInternalFrame {
             }
         });
 
+        tblItem.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+
+            },
+            new String [] {
+                "ID", "Title", "Currect Answer", "Q1", "Q2", "Q3", "Q4"
+            }
+        ) {
+            Class[] types = new Class [] {
+                java.lang.Object.class, java.lang.String.class, java.lang.Integer.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.Object.class
+            };
+            boolean[] canEdit = new boolean [] {
+                false, false, false, true, false, true, true
+            };
+
+            public Class getColumnClass(int columnIndex) {
+                return types [columnIndex];
+            }
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
+        tblItem.setFocusable(false);
+        jScrollPane2.setViewportView(tblItem);
+        if (tblItem.getColumnModel().getColumnCount() > 0) {
+            tblItem.getColumnModel().getColumn(0).setMinWidth(30);
+            tblItem.getColumnModel().getColumn(0).setPreferredWidth(30);
+        }
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGap(0, 846, Short.MAX_VALUE)
+            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(layout.createSequentialGroup()
+                    .addContainerGap()
+                    .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 834, Short.MAX_VALUE)
+                    .addContainerGap()))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGap(0, 593, Short.MAX_VALUE)
+            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(layout.createSequentialGroup()
+                    .addContainerGap()
+                    .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 587, Short.MAX_VALUE)))
         );
 
         pack();
@@ -66,5 +129,7 @@ public class ListQuestion extends javax.swing.JInternalFrame {
 
             
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JScrollPane jScrollPane2;
+    private javax.swing.JTable tblItem;
     // End of variables declaration//GEN-END:variables
 }

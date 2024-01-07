@@ -14,6 +14,7 @@ import javax.swing.JOptionPane;
 import miterapp.internal.AddQuestion;
 import miterapp.internal.ListQuestion;
 import miterapp.internal.ListUser;
+import miterapp.repositories.QuestionRepository;
 import miterapp.repositories.UserRepoitory;
 
 
@@ -24,6 +25,7 @@ import miterapp.repositories.UserRepoitory;
 public class MainDashboard extends javax.swing.JFrame {
     java.util.List<String> frmOpening = new ArrayList<>();
     private final UserRepoitory userRepo;
+    private final QuestionRepository questionRepo;
     /**
      * Creates new form MainDashboard
      */
@@ -31,6 +33,7 @@ public class MainDashboard extends javax.swing.JFrame {
         initComponents();
         this.setExtendedState(JFrame.MAXIMIZED_BOTH);
         this.userRepo = new UserRepoitory();
+        this.questionRepo = new QuestionRepository();
     }
 
     /**
@@ -160,7 +163,9 @@ public class MainDashboard extends javax.swing.JFrame {
     private void jMenuItem2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem2ActionPerformed
         // TODO add your handling code here:
         var frm = new ListQuestion();
+        frm.items = this.questionRepo.items;
         frm.setName("listQuestion");
+        frm.loadDataTable();
         this.showChild(frm);
     }//GEN-LAST:event_jMenuItem2ActionPerformed
 

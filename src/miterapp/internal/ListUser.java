@@ -6,6 +6,8 @@ package miterapp.internal;
 
 import java.util.ArrayList;
 import java.util.List;
+import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
 import miterapp.models.User;
 
 /**
@@ -24,17 +26,26 @@ public class ListUser extends javax.swing.JInternalFrame {
     
     public void loadDataTable(){
          try {
-            int i = 0;
+             DefaultTableModel tbl =(DefaultTableModel)this.tblItem.getModel();
+//            int i = 0;
             for (User user : this.items) {
-                this.tblUser.setValueAt(user.getUuid(), i, 0);
-                this.tblUser.setValueAt(user.getUsername(), i, 1);
-                this.tblUser.setValueAt(user.getFullName(), i, 2);
-                this.tblUser.setValueAt(user.getGender(), i, 3);
-                this.tblUser.setValueAt(user.getPassword(), i, 4);
-                i++;
+                tbl.addRow(new Object[]{
+                    user.getUuid(),
+                    user.getUsername(),
+                    user.getFullName(),
+                    user.getGender(),
+                    user.getPassword()
+                });
+//                this.tblUser.setValueAt(user.getUuid(), i, 0);
+//                this.tblUser.setValueAt(user.getUsername(), i, 1);
+//                this.tblUser.setValueAt(user.getFullName(), i, 2);
+//                this.tblUser.setValueAt(user.getGender(), i, 3);
+//                this.tblUser.setValueAt(user.getPassword(), i, 4);
+//                i++;
             }
         } catch (Exception e) {
             System.err.println("Erro: " + e.getMessage());
+             JOptionPane.showMessageDialog(rootPane, e.getMessage(), "Error Read Data", HEIGHT, frameIcon);
         }
     
     }
@@ -49,14 +60,11 @@ public class ListUser extends javax.swing.JInternalFrame {
     private void initComponents() {
 
         jScrollPane2 = new javax.swing.JScrollPane();
-        tblUser = new javax.swing.JTable();
+        tblItem = new javax.swing.JTable();
 
-        tblUser.setModel(new javax.swing.table.DefaultTableModel(
+        tblItem.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null}
+
             },
             new String [] {
                 "UUID", "Username", "Full Name", "Gender", "Password"
@@ -77,8 +85,8 @@ public class ListUser extends javax.swing.JInternalFrame {
                 return canEdit [columnIndex];
             }
         });
-        tblUser.setFocusable(false);
-        jScrollPane2.setViewportView(tblUser);
+        tblItem.setFocusable(false);
+        jScrollPane2.setViewportView(tblItem);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -106,6 +114,6 @@ public class ListUser extends javax.swing.JInternalFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JScrollPane jScrollPane2;
-    private javax.swing.JTable tblUser;
+    private javax.swing.JTable tblItem;
     // End of variables declaration//GEN-END:variables
 }
