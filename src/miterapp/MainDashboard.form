@@ -65,6 +65,9 @@
               <Properties>
                 <Property name="text" type="java.lang.String" value="Add User"/>
               </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jMenuItem4ActionPerformed"/>
+              </Events>
             </MenuItem>
           </SubComponents>
         </Menu>
@@ -120,6 +123,7 @@
     <Container class="javax.swing.JDesktopPane" name="jDesktopPane1">
       <Events>
         <EventHandler event="componentRemoved" listener="java.awt.event.ContainerListener" parameters="java.awt.event.ContainerEvent" handler="jDesktopPane1ComponentRemoved"/>
+        <EventHandler event="componentShown" listener="java.awt.event.ComponentListener" parameters="java.awt.event.ComponentEvent" handler="jDesktopPane1ComponentShown"/>
       </Events>
 
       <Layout>

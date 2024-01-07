@@ -15,41 +15,53 @@ import miterapp.models.User;
  * @author begoingtodev
  */
 public class ListUser extends javax.swing.JInternalFrame {
-    public List<User> items = new ArrayList<>();
+
+    private List<User> items = new ArrayList<>();
+    private final DefaultTableModel tbl;
 
     /**
      * Creates new form ListUser
      */
     public ListUser() {
         initComponents();
+        this.tbl = (DefaultTableModel) this.tblItem.getModel();
     }
-    
-    public void loadDataTable(){
-         try {
-             DefaultTableModel tbl =(DefaultTableModel)this.tblItem.getModel();
-//            int i = 0;
+
+    public void setItems(List<User> data) {
+        this.items = data;
+    }
+
+    public void loadDataTable() {
+        try {
+
             for (User user : this.items) {
                 tbl.addRow(new Object[]{
                     user.getUuid(),
                     user.getUsername(),
                     user.getFullName(),
                     user.getGender(),
-                    user.getPassword()
+                    user.getPassword(),
+                    user.getRole()
                 });
-//                this.tblUser.setValueAt(user.getUuid(), i, 0);
-//                this.tblUser.setValueAt(user.getUsername(), i, 1);
-//                this.tblUser.setValueAt(user.getFullName(), i, 2);
-//                this.tblUser.setValueAt(user.getGender(), i, 3);
-//                this.tblUser.setValueAt(user.getPassword(), i, 4);
-//                i++;
             }
         } catch (Exception e) {
             System.err.println("Erro: " + e.getMessage());
-             JOptionPane.showMessageDialog(rootPane, e.getMessage(), "Error Read Data", HEIGHT, frameIcon);
+            JOptionPane.showMessageDialog(rootPane, e.getMessage(), "Error Read Data", HEIGHT, frameIcon);
         }
-    
+
     }
-    
+
+    public void addItem(User user) {
+        tbl.addRow(new Object[]{
+            user.getUuid(),
+            user.getUsername(),
+            user.getFullName(),
+            user.getGender(),
+            user.getPassword(),
+            user.getRole()
+        });
+    }
+
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -67,14 +79,14 @@ public class ListUser extends javax.swing.JInternalFrame {
 
             },
             new String [] {
-                "UUID", "Username", "Full Name", "Gender", "Password"
+                "UUID", "Username", "Full Name", "Gender", "Password", "Role"
             }
         ) {
             Class[] types = new Class [] {
-                java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class
+                java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class
             };
             boolean[] canEdit = new boolean [] {
-                false, false, false, true, false
+                false, false, false, true, false, false
             };
 
             public Class getColumnClass(int columnIndex) {
@@ -86,17 +98,25 @@ public class ListUser extends javax.swing.JInternalFrame {
             }
         });
         tblItem.setFocusable(false);
+        tblItem.getTableHeader().setReorderingAllowed(false);
         jScrollPane2.setViewportView(tblItem);
+        if (tblItem.getColumnModel().getColumnCount() > 0) {
+            tblItem.getColumnModel().getColumn(0).setResizable(false);
+            tblItem.getColumnModel().getColumn(0).setPreferredWidth(50);
+            tblItem.getColumnModel().getColumn(2).setResizable(false);
+            tblItem.getColumnModel().getColumn(3).setResizable(false);
+            tblItem.getColumnModel().getColumn(4).setResizable(false);
+        }
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 956, Short.MAX_VALUE)
+            .addGap(0, 994, Short.MAX_VALUE)
             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(layout.createSequentialGroup()
                     .addContainerGap()
-                    .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 944, Short.MAX_VALUE)
+                    .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 982, Short.MAX_VALUE)
                     .addContainerGap()))
         );
         layout.setVerticalGroup(

@@ -14,13 +14,17 @@ import miterapp.models.Question;
  * @author begoingtodev
  */
 public class ListQuestion extends javax.swing.JInternalFrame {
-    public List<Question> items = new ArrayList<>();
+    private List<Question> items = new ArrayList<>();
 
     /**
      * Creates new form ListQuestion
      */
     public ListQuestion() {
         initComponents();
+    }
+    
+    public void setItems(List<Question> data){
+        this.items = data;
     }
     
     public void loadDataTable(){

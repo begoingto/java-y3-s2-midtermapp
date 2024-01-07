@@ -14,6 +14,7 @@ import javax.swing.JOptionPane;
 import miterapp.internal.AddQuestion;
 import miterapp.internal.ListQuestion;
 import miterapp.internal.ListUser;
+import miterapp.internal.AddUser;
 import miterapp.repositories.QuestionRepository;
 import miterapp.repositories.UserRepoitory;
 
@@ -34,6 +35,7 @@ public class MainDashboard extends javax.swing.JFrame {
         this.setExtendedState(JFrame.MAXIMIZED_BOTH);
         this.userRepo = new UserRepoitory();
         this.questionRepo = new QuestionRepository();
+        listUser.setItems(this.userRepo.items);
     }
 
     /**
@@ -62,6 +64,11 @@ public class MainDashboard extends javax.swing.JFrame {
         jDesktopPane1.addContainerListener(new java.awt.event.ContainerAdapter() {
             public void componentRemoved(java.awt.event.ContainerEvent evt) {
                 jDesktopPane1ComponentRemoved(evt);
+            }
+        });
+        jDesktopPane1.addComponentListener(new java.awt.event.ComponentAdapter() {
+            public void componentShown(java.awt.event.ComponentEvent evt) {
+                jDesktopPane1ComponentShown(evt);
             }
         });
 
@@ -125,6 +132,11 @@ public class MainDashboard extends javax.swing.JFrame {
         jMenu3.add(mListUser);
 
         jMenuItem4.setText("Add User");
+        jMenuItem4.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem4ActionPerformed(evt);
+            }
+        });
         jMenu3.add(jMenuItem4);
 
         jMenuBar1.add(jMenu3);
@@ -163,7 +175,7 @@ public class MainDashboard extends javax.swing.JFrame {
     private void jMenuItem2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem2ActionPerformed
         // TODO add your handling code here:
         var frm = new ListQuestion();
-        frm.items = this.questionRepo.items;
+        frm.setItems(this.questionRepo.items);
         frm.setName("listQuestion");
         frm.loadDataTable();
         this.showChild(frm);
@@ -183,16 +195,34 @@ public class MainDashboard extends javax.swing.JFrame {
     private void jDesktopPane1ComponentRemoved(java.awt.event.ContainerEvent evt) {//GEN-FIRST:event_jDesktopPane1ComponentRemoved
         // TODO add your handling code here:
         this.frmOpening.remove(evt.getChild().getName());
+        if(evt.getChild().getName().equals("listUser")){
+            listUser.setItems(new ArrayList<>());
+        }
     }//GEN-LAST:event_jDesktopPane1ComponentRemoved
-
+    
+    private ListUser listUser=  new ListUser();
     private void mListUserActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mListUserActionPerformed
         // TODO add your handling code here:
-        var frm = new ListUser();
-        frm.setName("listUser");
-        frm.items = this.userRepo.items;
-        frm.loadDataTable();
-        this.showChild(frm);
+        if(!frmOpening.contains(listUser.getName())){
+            listUser.setName("listUser");
+            listUser.loadDataTable();
+            this.showChild(listUser);
+        }
     }//GEN-LAST:event_mListUserActionPerformed
+
+    private void jMenuItem4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem4ActionPerformed
+        // TODO add your handling code here:
+        var frm = new AddUser();
+        frm.setName("addUser");
+        frm.setUserRepo(this.userRepo);
+        frm.setListUser(listUser);
+        this.showChild(frm);
+    }//GEN-LAST:event_jMenuItem4ActionPerformed
+
+    private void jDesktopPane1ComponentShown(java.awt.event.ComponentEvent evt) {//GEN-FIRST:event_jDesktopPane1ComponentShown
+        // TODO add your handling code here:
+        System.out.println("ComponentShown: Event...");
+    }//GEN-LAST:event_jDesktopPane1ComponentShown
 
     private void showChild(JInternalFrame frm){
         if(frmOpening.contains(frm.getName())){
@@ -200,10 +230,15 @@ public class MainDashboard extends javax.swing.JFrame {
             return;
         }
         try {
-            frm.setMaximum(true);
+            if(frm.getName().equals("addUser")){
+                
+            }else{
+                frm.setMaximum(true);
+            }
             frm.setClosable(true);
             frm.setMaximizable(true);
             frm.setIconifiable(true);
+            frm.setResizable(true);
             this.jDesktopPane1.add(frm).setVisible(true);
             this.frmOpening.add(frm.getName());
         } catch (PropertyVetoException ex) {
