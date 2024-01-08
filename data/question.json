@@ -1,16 +1,1 @@
-{
-	"data": [
-		{
-			"id": 1,
-			"level": "advance",
-			"title": "What is your primary motivation for pursuing higher education?",
-			"answers": [
-				"To gain knowledge and skills",
-				"To earn a degree for career advancement",
-				"To meet new people and expand my social network",
-				"Other (please specify)"
-			],
-			"correctAnswer": 2
-		}
-	]
-}
+{"data":[{"id":1,"level":"advance","title":"What is your primary motivation for pursuing higher education?","answers":["To gain knowledge and skills","To earn a degree for career advancement","To meet new people and expand my social network","Other (please specify)"],"correctAnswer":2},{"id":2,"level":"Intermedate","title":"What is your name?","answers":["A","B","C","D"],"correctAnswer":1}]}

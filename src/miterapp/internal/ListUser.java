@@ -33,16 +33,8 @@ public class ListUser extends javax.swing.JInternalFrame {
 
     public void loadDataTable() {
         try {
-
             for (User user : this.items) {
-                tbl.addRow(new Object[]{
-                    user.getUuid(),
-                    user.getUsername(),
-                    user.getFullName(),
-                    user.getGender(),
-                    user.getPassword(),
-                    user.getRole()
-                });
+                this.addItem(user);
             }
         } catch (Exception e) {
             System.err.println("Erro: " + e.getMessage());

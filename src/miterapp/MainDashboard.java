@@ -18,15 +18,17 @@ import miterapp.internal.AddUser;
 import miterapp.repositories.QuestionRepository;
 import miterapp.repositories.UserRepoitory;
 
-
 /**
  *
  * @author begoingtodev
  */
 public class MainDashboard extends javax.swing.JFrame {
+
     java.util.List<String> frmOpening = new ArrayList<>();
     private final UserRepoitory userRepo;
     private final QuestionRepository questionRepo;
+    private final ListUser listUser = new ListUser();
+    private final ListQuestion listQuestion = new ListQuestion();
     /**
      * Creates new form MainDashboard
      */
@@ -36,6 +38,9 @@ public class MainDashboard extends javax.swing.JFrame {
         this.userRepo = new UserRepoitory();
         this.questionRepo = new QuestionRepository();
         listUser.setItems(this.userRepo.items);
+        listQuestion.setItems(this.questionRepo.items);
+
+
     }
 
     /**
@@ -174,11 +179,11 @@ public class MainDashboard extends javax.swing.JFrame {
 
     private void jMenuItem2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem2ActionPerformed
         // TODO add your handling code here:
-        var frm = new ListQuestion();
-        frm.setItems(this.questionRepo.items);
-        frm.setName("listQuestion");
-        frm.loadDataTable();
-        this.showChild(frm);
+        if (!frmOpening.contains(listQuestion.getName())) {
+            listQuestion.setName("listQuestion");
+            listQuestion.loadDataTable();
+            this.showChild(listQuestion);
+        }
     }//GEN-LAST:event_jMenuItem2ActionPerformed
 
     private void jMenu2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenu2ActionPerformed
@@ -188,6 +193,8 @@ public class MainDashboard extends javax.swing.JFrame {
     private void jMenuItem1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem1ActionPerformed
         // TODO add your handling code here:
         var frm = new AddQuestion();
+        frm.setListItem(listQuestion);
+        frm.setItemRepo(questionRepo);
         frm.setName("addQuestion");
         this.showChild(frm);
     }//GEN-LAST:event_jMenuItem1ActionPerformed
@@ -195,15 +202,19 @@ public class MainDashboard extends javax.swing.JFrame {
     private void jDesktopPane1ComponentRemoved(java.awt.event.ContainerEvent evt) {//GEN-FIRST:event_jDesktopPane1ComponentRemoved
         // TODO add your handling code here:
         this.frmOpening.remove(evt.getChild().getName());
-        if(evt.getChild().getName().equals("listUser")){
+        var resetItems = new ArrayList<>();
+        resetItems.add("listUser");
+        resetItems.add("listQuestion");
+        if (resetItems.contains(evt.getChild().getName())) {
             listUser.setItems(new ArrayList<>());
+            listQuestion.setItems(new ArrayList<>());
         }
     }//GEN-LAST:event_jDesktopPane1ComponentRemoved
+
     
-    private ListUser listUser=  new ListUser();
     private void mListUserActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mListUserActionPerformed
         // TODO add your handling code here:
-        if(!frmOpening.contains(listUser.getName())){
+        if (!frmOpening.contains(listUser.getName())) {
             listUser.setName("listUser");
             listUser.loadDataTable();
             this.showChild(listUser);
@@ -224,15 +235,18 @@ public class MainDashboard extends javax.swing.JFrame {
         System.out.println("ComponentShown: Event...");
     }//GEN-LAST:event_jDesktopPane1ComponentShown
 
-    private void showChild(JInternalFrame frm){
-        if(frmOpening.contains(frm.getName())){
-            JOptionPane.showMessageDialog(rootPane, "Your "+ frm.getName() +" form is opening...");
+    private void showChild(JInternalFrame frm) {
+        if (frmOpening.contains(frm.getName())) {
+            JOptionPane.showMessageDialog(rootPane, "Your " + frm.getName() + " form is opening...");
             return;
         }
+        var noFull = new ArrayList<>();
+        noFull.add("addUser");
+        noFull.add("addQuestion");
         try {
-            if(frm.getName().equals("addUser")){
-                
-            }else{
+            if (noFull.contains(frm.getName())) {
+
+            } else {
                 frm.setMaximum(true);
             }
             frm.setClosable(true);
@@ -245,6 +259,7 @@ public class MainDashboard extends javax.swing.JFrame {
             Logger.getLogger(MainDashboard.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
+
     /**
      * @param args the command line arguments
      */

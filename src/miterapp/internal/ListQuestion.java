@@ -14,32 +14,38 @@ import miterapp.models.Question;
  * @author begoingtodev
  */
 public class ListQuestion extends javax.swing.JInternalFrame {
+
     private List<Question> items = new ArrayList<>();
+    private final DefaultTableModel tbl;
 
     /**
      * Creates new form ListQuestion
      */
     public ListQuestion() {
         initComponents();
+        this.tbl = (DefaultTableModel) this.tblItem.getModel();
     }
-    
-    public void setItems(List<Question> data){
+
+    public void setItems(List<Question> data) {
         this.items = data;
     }
-    
-    public void loadDataTable(){
-        DefaultTableModel tbl =(DefaultTableModel)this.tblItem.getModel();
-        for(Question item: items){
-            tbl.addRow(new Object[]{
-                item.getId(),
-                item.getTitle(),
-                item.getCorrectAnswer(),
-                item.getAnswers().get(0),
-                item.getAnswers().get(1),
-                item.getAnswers().get(2),
-                item.getAnswers().get(3)
-            });
+
+    public void loadDataTable() {
+        for (Question item : items) {
+            this.addItem(item);
         }
+    }
+
+    public void addItem(Question q) {
+        tbl.addRow(new Object[]{
+            q.getId(),
+            q.getTitle(),
+            q.getCorrectAnswer(),
+            q.getAnswers().get(0),
+            q.getAnswers().get(1),
+            q.getAnswers().get(2),
+            q.getAnswers().get(3)
+        });
     }
 
     /**
@@ -131,7 +137,7 @@ public class ListQuestion extends javax.swing.JInternalFrame {
         System.out.println("Closing...");
     }//GEN-LAST:event_formInternalFrameClosed
 
-            
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JTable tblItem;

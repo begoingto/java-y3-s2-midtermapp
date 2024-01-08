@@ -4,6 +4,8 @@
  */
 package miterapp.repositories;
 
+import java.util.ArrayList;
+import java.util.List;
 import miterapp.models.Question;
 import miterapp.services.MainService;
 
@@ -16,6 +18,15 @@ public class QuestionRepository extends MainService<Question>{
     public QuestionRepository() {
         super("question",Question.class);
         super.LoadData();
+    }
+    
+    public void AddQuestion(Question q){
+    
+        List<Question> users = new ArrayList<>(){{
+            addAll(items);
+        }};
+        users.add(q);
+        super.writeItemsToJson(users);
     }
     
 }
