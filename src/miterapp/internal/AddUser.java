@@ -17,7 +17,7 @@ public class AddUser extends javax.swing.JInternalFrame {
 
     private UserRepoitory userRepo;
     private ListUser listUser;
-    User user;
+    User user = new User();
     private Integer userIndex;
 
     /**
@@ -207,7 +207,7 @@ public class AddUser extends javax.swing.JInternalFrame {
 
     private void btnClearActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnClearActionPerformed
         // TODO add your handling codes here:
-        if (this.user == null) {
+        if (this.user.getUuid() == null) {
             this.clearForm();
         } else {
             this.userRepo.deleteUser(user);
