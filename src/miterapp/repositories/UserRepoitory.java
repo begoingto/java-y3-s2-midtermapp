@@ -40,13 +40,21 @@ public class UserRepoitory extends MainService<User> implements UserService{
     }
 
     @Override
-    public void updateUser(User user) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    public void updateUser(Integer index,User user) {
+        List<User> users = new ArrayList<>(){{
+            addAll(items);
+        }};
+        users.set(index,user);
+        super.writeItemsToJson(users);
     }
 
     @Override
     public void deleteUser(User user) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        List<User> users = new ArrayList<>(){{
+            addAll(items);
+        }};
+        users.remove(user);
+        super.writeItemsToJson(users);
     }
 
     @Override

@@ -7,7 +7,6 @@ package miterapp;
 import com.formdev.flatlaf.themes.FlatMacLightLaf;
 import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
-import miterapp.models.User;
 
 /**
  *
@@ -44,7 +43,7 @@ public class FrmLogin extends javax.swing.JFrame {
         jPanel7 = new javax.swing.JPanel();
         jPanel5 = new javax.swing.JPanel();
         jLabel3 = new javax.swing.JLabel();
-        txtPassword = new javax.swing.JTextField();
+        txtPassword = new javax.swing.JPasswordField();
         checkShowPass = new javax.swing.JCheckBox();
         jPanel8 = new javax.swing.JPanel();
         btnLogin = new javax.swing.JButton();
@@ -52,7 +51,6 @@ public class FrmLogin extends javax.swing.JFrame {
         jPanel9 = new javax.swing.JPanel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        setPreferredSize(new java.awt.Dimension(800, 417));
         getContentPane().setLayout(new javax.swing.BoxLayout(getContentPane(), javax.swing.BoxLayout.X_AXIS));
 
         jPanel1.setPreferredSize(new java.awt.Dimension(400, 150));
@@ -120,9 +118,8 @@ public class FrmLogin extends javax.swing.JFrame {
         jLabel3.setText("Password");
         jPanel5.add(jLabel3, java.awt.BorderLayout.PAGE_START);
 
-        txtPassword.setToolTipText("Username");
         txtPassword.setPreferredSize(new java.awt.Dimension(64, 40));
-        jPanel5.add(txtPassword, java.awt.BorderLayout.CENTER);
+        jPanel5.add(txtPassword, java.awt.BorderLayout.PAGE_END);
 
         jPanel6.add(jPanel5);
 
@@ -204,11 +201,11 @@ public class FrmLogin extends javax.swing.JFrame {
 
     private void checkShowPassActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_checkShowPassActionPerformed
         // TODO add your handling code here:
-//        if (this.checkShowPass.isSelected()) {
-//            this.txtPassword.setEchoChar((char) 0);
-//        } else {
-//            this.txtPassword.setEchoChar('*');
-//        }
+        if (this.checkShowPass.isSelected()) {
+            this.txtPassword.setEchoChar((char) 0);
+        } else {
+            this.txtPassword.setEchoChar('*');
+        }
     }//GEN-LAST:event_checkShowPassActionPerformed
 
     private void btnLoginActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLoginActionPerformed
@@ -271,6 +268,6 @@ public class FrmLogin extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel8;
     private javax.swing.JPanel jPanel9;
     private javax.swing.JTextField txtName;
-    private javax.swing.JTextField txtPassword;
+    private javax.swing.JPasswordField txtPassword;
     // End of variables declaration//GEN-END:variables
 }

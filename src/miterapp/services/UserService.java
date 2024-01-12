@@ -15,7 +15,7 @@ import miterapp.models.User;
 public interface UserService {
     List<User> getAll();
     User addUser(User user);
-    void updateUser(User user);
+    void updateUser(Integer index,User user);
     void deleteUser(User user);
     User getByUuid(UUID uuid);
 }

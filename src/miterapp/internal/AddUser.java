@@ -14,9 +14,12 @@ import miterapp.repositories.UserRepoitory;
  * @author begoingtodev
  */
 public class AddUser extends javax.swing.JInternalFrame {
+
     private UserRepoitory userRepo;
     private ListUser listUser;
-    
+    User user;
+    private Integer userIndex;
+
     /**
      * Creates new form AddUser
      */
@@ -25,15 +28,19 @@ public class AddUser extends javax.swing.JInternalFrame {
         UUID uuid = UUID.randomUUID();
         this.txtUuid.setText(uuid.toString());
     }
-    
-    public void setUserRepo(UserRepoitory repo){
+
+    public void setUserRepo(UserRepoitory repo) {
         this.userRepo = repo;
     }
-    
-    public void setListUser(ListUser listData){
+
+    public void setListUser(ListUser listData) {
         this.listUser = listData;
     }
-    
+
+    public void setUserIndex(Integer ind) {
+        this.userIndex = ind;
+    }
+
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -52,10 +59,13 @@ public class AddUser extends javax.swing.JInternalFrame {
         jLabel5 = new javax.swing.JLabel();
         cbGender = new javax.swing.JComboBox<>();
         jLabel6 = new javax.swing.JLabel();
-        txtPassword = new javax.swing.JTextField();
         jLabel7 = new javax.swing.JLabel();
         cbRole = new javax.swing.JComboBox<>();
         btnAdd = new javax.swing.JButton();
+        txtPassword = new javax.swing.JPasswordField();
+        jLabel8 = new javax.swing.JLabel();
+        txtConfirmPassword = new javax.swing.JPasswordField();
+        btnClear = new javax.swing.JButton();
 
         jLabel2.setText("UUID");
 
@@ -80,9 +90,25 @@ public class AddUser extends javax.swing.JInternalFrame {
 
         btnAdd.setBackground(new java.awt.Color(102, 255, 153));
         btnAdd.setText("Add");
+        btnAdd.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         btnAdd.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnAddActionPerformed(evt);
+            }
+        });
+
+        txtPassword.setRequestFocusEnabled(false);
+
+        jLabel8.setText("Confirm Password");
+
+        txtConfirmPassword.setRequestFocusEnabled(false);
+
+        btnClear.setBackground(new java.awt.Color(255, 153, 153));
+        btnClear.setText("Clear");
+        btnClear.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        btnClear.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnClearActionPerformed(evt);
             }
         });
 
@@ -90,26 +116,30 @@ public class AddUser extends javax.swing.JInternalFrame {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addGap(90, 90, 90)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addGap(19, 19, 19)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(jLabel7, javax.swing.GroupLayout.PREFERRED_SIZE, 126, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel4)
                     .addComponent(jLabel2)
                     .addComponent(jLabel3)
                     .addComponent(jLabel5)
-                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                        .addComponent(jLabel7, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(jLabel6, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                    .addComponent(jLabel6)
+                    .addComponent(jLabel8))
                 .addGap(35, 35, 35)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(btnAdd, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(btnAdd, javax.swing.GroupLayout.PREFERRED_SIZE, 156, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(btnClear))
                     .addComponent(cbRole, javax.swing.GroupLayout.Alignment.TRAILING, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(txtConfirmPassword)
                     .addComponent(cbGender, javax.swing.GroupLayout.Alignment.TRAILING, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(txtUuid, javax.swing.GroupLayout.DEFAULT_SIZE, 271, Short.MAX_VALUE)
+                    .addComponent(txtUuid, javax.swing.GroupLayout.DEFAULT_SIZE, 277, Short.MAX_VALUE)
                     .addComponent(txtUsername)
                     .addComponent(txtFullName)
-                    .addComponent(txtPassword, javax.swing.GroupLayout.Alignment.TRAILING))
-                .addGap(143, 143, 143))
+                    .addComponent(txtPassword))
+                .addGap(137, 137, 137))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -134,13 +164,19 @@ public class AddUser extends javax.swing.JInternalFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel6)
                     .addComponent(txtPassword, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel8)
+                    .addComponent(txtConfirmPassword, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(14, 14, 14)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(cbRole, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel7, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(29, 29, 29)
-                .addComponent(btnAdd, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(143, Short.MAX_VALUE))
+                .addGap(18, 18, 18)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(btnAdd, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnClear, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(116, Short.MAX_VALUE))
         );
 
         pack();
@@ -148,21 +184,60 @@ public class AddUser extends javax.swing.JInternalFrame {
 
     private void btnAddActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddActionPerformed
         // TODO add your handling code here:
-        User user = new User();
-        user.setUuid(UUID.fromString(this.txtUuid.getText()));
         user.setUsername(this.txtUsername.getText());
         user.setFullName(this.txtFullName.getText());
         user.setGender(this.cbGender.getSelectedItem().toString());
         user.setPassword(this.txtPassword.getText());
         user.setRole(this.cbRole.getSelectedItem().toString());
-        this.userRepo.addUser(user);
-        this.listUser.addItem(user);
-        JOptionPane.showMessageDialog(rootPane, "You have been add successfully");
+        if (this.user.getUuid() == null) {
+            user.setUuid(UUID.fromString(this.txtUuid.getText()));
+            this.userRepo.addUser(user);
+            this.listUser.addItem(user);
+            JOptionPane.showMessageDialog(rootPane, "You have been add successfully");
+        } else {
+            user.setUuid(UUID.fromString(this.txtUuid.getText()));
+            this.userRepo.updateUser(this.userIndex, user);
+            this.listUser.setUpdateItem(this.userIndex, user);
+            JOptionPane.showMessageDialog(rootPane, "You have been update successfully");
+            this.dispose();
+        }
         this.clearForm();
         //        this.dispose();
     }//GEN-LAST:event_btnAddActionPerformed
 
-    private void clearForm(){
+    private void btnClearActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnClearActionPerformed
+        // TODO add your handling codes here:
+        if (this.user == null) {
+            this.clearForm();
+        } else {
+            this.userRepo.deleteUser(user);
+            this.listUser.removeItem(this.userIndex);
+            JOptionPane.showMessageDialog(rootPane, "You have been Delete successfully:");
+            this.dispose();
+        }
+    }//GEN-LAST:event_btnClearActionPerformed
+
+    public void setUserToField(User user) {
+        this.user = user;
+        this.btnAdd.setText("Update");
+        this.btnClear.setText("Delete");
+        this.txtUuid.setText(user.getUuid().toString());
+        this.txtUsername.setText(user.getUsername());
+        this.txtFullName.setText(user.getFullName());
+        this.txtPassword.setText(user.getPassword());
+        if (user.getGender().equalsIgnoreCase("male")) {
+            this.cbGender.setSelectedIndex(0);
+        } else {
+            this.cbGender.setSelectedIndex(1);
+        }
+        if (user.getRole().equalsIgnoreCase("Admin")) {
+            this.cbRole.setSelectedIndex(0);
+        } else {
+            this.cbRole.setSelectedIndex(1);
+        }
+    }
+
+    private void clearForm() {
         this.txtUuid.setText(UUID.randomUUID().toString());
         this.txtUsername.setText("");
         this.txtFullName.setText("");
@@ -171,6 +246,7 @@ public class AddUser extends javax.swing.JInternalFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnAdd;
+    private javax.swing.JButton btnClear;
     private javax.swing.JComboBox<String> cbGender;
     private javax.swing.JComboBox<String> cbRole;
     private javax.swing.JLabel jLabel2;
@@ -179,8 +255,10 @@ public class AddUser extends javax.swing.JInternalFrame {
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
+    private javax.swing.JLabel jLabel8;
+    private javax.swing.JPasswordField txtConfirmPassword;
     private javax.swing.JTextField txtFullName;
-    private javax.swing.JTextField txtPassword;
+    private javax.swing.JPasswordField txtPassword;
     private javax.swing.JTextField txtUsername;
     private javax.swing.JTextField txtUuid;
     // End of variables declaration//GEN-END:variables

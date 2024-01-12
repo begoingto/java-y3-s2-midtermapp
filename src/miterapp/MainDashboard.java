@@ -38,6 +38,8 @@ public class MainDashboard extends javax.swing.JFrame {
         this.userRepo = new UserRepoitory();
         this.questionRepo = new QuestionRepository();
         listUser.setItems(this.userRepo.items);
+        listUser.setMainDashboard(this);
+        listUser.setUserRepo(this.userRepo);
         listQuestion.setItems(this.questionRepo.items);
 
 
@@ -235,13 +237,14 @@ public class MainDashboard extends javax.swing.JFrame {
         System.out.println("ComponentShown: Event...");
     }//GEN-LAST:event_jDesktopPane1ComponentShown
 
-    private void showChild(JInternalFrame frm) {
+    public void showChild(JInternalFrame frm) {
         if (frmOpening.contains(frm.getName())) {
             JOptionPane.showMessageDialog(rootPane, "Your " + frm.getName() + " form is opening...");
             return;
         }
         var noFull = new ArrayList<>();
         noFull.add("addUser");
+        noFull.add("updateUser");
         noFull.add("addQuestion");
         try {
             if (noFull.contains(frm.getName())) {

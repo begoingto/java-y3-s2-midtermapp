@@ -8,7 +8,10 @@ import java.util.ArrayList;
 import java.util.List;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
+import miterapp.MainDashboard;
 import miterapp.models.User;
+import miterapp.repositories.QuestionRepository;
+import miterapp.repositories.UserRepoitory;
 
 /**
  *
@@ -18,6 +21,9 @@ public class ListUser extends javax.swing.JInternalFrame {
 
     private List<User> items = new ArrayList<>();
     private final DefaultTableModel tbl;
+    private MainDashboard mainDashboard;
+    private UserRepoitory userRepo;
+    Integer selectItem;
 
     /**
      * Creates new form ListUser
@@ -26,6 +32,16 @@ public class ListUser extends javax.swing.JInternalFrame {
         initComponents();
         this.tbl = (DefaultTableModel) this.tblItem.getModel();
     }
+    
+    public void setMainDashboard(MainDashboard main){
+        this.mainDashboard = main;
+    }
+    
+    
+    public void setUserRepo(UserRepoitory repo){
+        this.userRepo = repo;
+    }
+    
 
     public void setItems(List<User> data) {
         this.items = data;
@@ -50,8 +66,21 @@ public class ListUser extends javax.swing.JInternalFrame {
             user.getFullName(),
             user.getGender(),
             user.getPassword(),
-            user.getRole()
+            user.getRole(),
         });
+    }
+    
+    public void removeItem(Integer index){
+        this.tbl.removeRow(index);
+    }
+    
+    public void setUpdateItem(Integer index, User user){
+        this.tbl.setValueAt(user.getUuid(), index, 0);
+        this.tbl.setValueAt(user.getUsername(), index, 1);
+        this.tbl.setValueAt(user.getFullName(), index, 2);
+        this.tbl.setValueAt(user.getGender(), index, 3);
+        this.tbl.setValueAt(user.getPassword(), index, 4);
+        this.tbl.setValueAt(user.getRole(), index, 5);
     }
 
     /**
@@ -91,6 +120,11 @@ public class ListUser extends javax.swing.JInternalFrame {
         });
         tblItem.setFocusable(false);
         tblItem.getTableHeader().setReorderingAllowed(false);
+        tblItem.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                tblItemMousePressed(evt);
+            }
+        });
         jScrollPane2.setViewportView(tblItem);
         if (tblItem.getColumnModel().getColumnCount() > 0) {
             tblItem.getColumnModel().getColumn(0).setResizable(false);
@@ -122,6 +156,20 @@ public class ListUser extends javax.swing.JInternalFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void tblItemMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblItemMousePressed
+        // TODO add your handling code here:
+        this.selectItem = this.tblItem.getSelectedRow();
+        User user = this.items.get(selectItem);
+//        JOptionPane.showMessageDialog(rootPane, "User: "+ user);
+        AddUser frm = new AddUser();
+        frm.setName("updateUser");
+        frm.setUserIndex(this.selectItem);
+        frm.setUserRepo(this.userRepo);
+        frm.setListUser(this);
+        frm.setUserToField(user);
+        mainDashboard.showChild(frm);
+    }//GEN-LAST:event_tblItemMousePressed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
