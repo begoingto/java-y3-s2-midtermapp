@@ -10,7 +10,6 @@ import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import miterapp.MainDashboard;
 import miterapp.models.User;
-import miterapp.repositories.QuestionRepository;
 import miterapp.repositories.UserRepoitory;
 
 /**
@@ -48,15 +47,18 @@ public class ListUser extends javax.swing.JInternalFrame {
     }
 
     public void loadDataTable() {
+        this.setDataToTable(this.items);
+    }
+    
+    private void setDataToTable(List<User> users){
         try {
-            for (User user : this.items) {
+            for (User user : users) {
                 this.addItem(user);
             }
         } catch (Exception e) {
             System.err.println("Erro: " + e.getMessage());
             JOptionPane.showMessageDialog(rootPane, e.getMessage(), "Error Read Data", HEIGHT, frameIcon);
         }
-
     }
 
     public void addItem(User user) {
@@ -92,8 +94,34 @@ public class ListUser extends javax.swing.JInternalFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        jPanel1 = new javax.swing.JPanel();
+        jLabel1 = new javax.swing.JLabel();
+        txtSearch = new javax.swing.JTextField();
+        cbField = new javax.swing.JComboBox<>();
+        btnSearch = new javax.swing.JButton();
         jScrollPane2 = new javax.swing.JScrollPane();
         tblItem = new javax.swing.JTable();
+        lblReset = new javax.swing.JLabel();
+
+        getContentPane().setLayout(new javax.swing.BoxLayout(getContentPane(), javax.swing.BoxLayout.Y_AXIS));
+
+        jPanel1.setMinimumSize(new java.awt.Dimension(964, 0));
+        jPanel1.setName(""); // NOI18N
+        jPanel1.setPreferredSize(new java.awt.Dimension(988, 561));
+
+        jLabel1.setText("Search:");
+
+        cbField.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Username", "Full Name", "Uuid", "Gender", "Role" }));
+
+        btnSearch.setBackground(new java.awt.Color(9, 200, 207));
+        btnSearch.setForeground(new java.awt.Color(255, 255, 255));
+        btnSearch.setText("Search");
+        btnSearch.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        btnSearch.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnSearchActionPerformed(evt);
+            }
+        });
 
         tblItem.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -134,25 +162,53 @@ public class ListUser extends javax.swing.JInternalFrame {
             tblItem.getColumnModel().getColumn(4).setResizable(false);
         }
 
-        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
-        getContentPane().setLayout(layout);
-        layout.setHorizontalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 994, Short.MAX_VALUE)
-            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addGroup(layout.createSequentialGroup()
-                    .addContainerGap()
-                    .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 982, Short.MAX_VALUE)
-                    .addContainerGap()))
+        lblReset.setForeground(new java.awt.Color(255, 51, 51));
+        lblReset.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        lblReset.setText("Reset");
+        lblReset.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        lblReset.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                lblResetMousePressed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
+        jPanel1.setLayout(jPanel1Layout);
+        jPanel1Layout.setHorizontalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jScrollPane2)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 47, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(txtSearch, javax.swing.GroupLayout.PREFERRED_SIZE, 257, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(cbField, javax.swing.GroupLayout.PREFERRED_SIZE, 109, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(btnSearch)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(lblReset, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(0, 416, Short.MAX_VALUE)))
+                .addContainerGap())
         );
-        layout.setVerticalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 477, Short.MAX_VALUE)
-            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addGroup(layout.createSequentialGroup()
-                    .addContainerGap()
-                    .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 471, Short.MAX_VALUE)))
+        jPanel1Layout.setVerticalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(txtSearch, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(cbField, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnSearch, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(lblReset, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 512, Short.MAX_VALUE)
+                .addContainerGap())
         );
+
+        getContentPane().add(jPanel1);
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
@@ -171,9 +227,41 @@ public class ListUser extends javax.swing.JInternalFrame {
         mainDashboard.showChild(frm);
     }//GEN-LAST:event_tblItemMousePressed
 
+    private void btnSearchActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSearchActionPerformed
+        // TODO add your handling code here:
+        String q = txtSearch.getText().trim();
+        String field = cbField.getSelectedItem().toString().toLowerCase();
+        List<User> users = userRepo.items.stream().filter((u) -> {
+            return switch (field) {
+                case "username" -> u.getUsername().equalsIgnoreCase(q);
+                case "full name" -> u.getFullName().equalsIgnoreCase(q);
+                case "uuid" -> u.getUuid().toString().equalsIgnoreCase(q);
+                case "gender" -> u.getGender().equalsIgnoreCase(q);
+                case "role" -> u.getRole().equalsIgnoreCase(q);
+                default -> true;
+            };
+        }).toList();
+        this.tbl.getDataVector().removeAllElements();
+        this.setDataToTable(users);
+    }//GEN-LAST:event_btnSearchActionPerformed
+
+    private void lblResetMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblResetMousePressed
+        // TODO add your handling code here:
+        this.txtSearch.setText("");
+        this.cbField.setSelectedIndex(0);
+        this.tbl.getDataVector().removeAllElements();
+        this.setDataToTable(this.items);
+    }//GEN-LAST:event_lblResetMousePressed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnSearch;
+    private javax.swing.JComboBox<String> cbField;
+    private javax.swing.JLabel jLabel1;
+    private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane2;
+    private javax.swing.JLabel lblReset;
     private javax.swing.JTable tblItem;
+    private javax.swing.JTextField txtSearch;
     // End of variables declaration//GEN-END:variables
 }

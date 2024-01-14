@@ -27,6 +27,9 @@ public class AddUser extends javax.swing.JInternalFrame {
         initComponents();
         UUID uuid = UUID.randomUUID();
         this.txtUuid.setText(uuid.toString());
+        if(user !=null){
+            this.btnClear.setEnabled(false);
+        }
     }
 
     public void setUserRepo(UserRepoitory repo) {
@@ -88,7 +91,8 @@ public class AddUser extends javax.swing.JInternalFrame {
 
         cbRole.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "ADMIN", "STUDENT" }));
 
-        btnAdd.setBackground(new java.awt.Color(102, 255, 153));
+        btnAdd.setBackground(new java.awt.Color(9, 200, 207));
+        btnAdd.setForeground(new java.awt.Color(255, 255, 255));
         btnAdd.setText("Add");
         btnAdd.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         btnAdd.addActionListener(new java.awt.event.ActionListener() {

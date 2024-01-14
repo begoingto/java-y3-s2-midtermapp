@@ -57,8 +57,8 @@ public class MainDashboard extends javax.swing.JFrame {
         jDesktopPane1 = new javax.swing.JDesktopPane();
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenu1 = new javax.swing.JMenu();
-        jMenuItem5 = new javax.swing.JMenuItem();
         mSwitchUser = new javax.swing.JMenuItem();
+        jMenuItem5 = new javax.swing.JMenuItem();
         jMenu2 = new javax.swing.JMenu();
         jMenuItem2 = new javax.swing.JMenuItem();
         jMenuItem1 = new javax.swing.JMenuItem();
@@ -93,6 +93,14 @@ public class MainDashboard extends javax.swing.JFrame {
 
         jMenu1.setText("File");
 
+        mSwitchUser.setText("Switch User");
+        mSwitchUser.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                mSwitchUserActionPerformed(evt);
+            }
+        });
+        jMenu1.add(mSwitchUser);
+
         jMenuItem5.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_Q, 0));
         jMenuItem5.setText("Exit");
         jMenuItem5.addActionListener(new java.awt.event.ActionListener() {
@@ -101,14 +109,6 @@ public class MainDashboard extends javax.swing.JFrame {
             }
         });
         jMenu1.add(jMenuItem5);
-
-        mSwitchUser.setText("Switch User");
-        mSwitchUser.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                mSwitchUserActionPerformed(evt);
-            }
-        });
-        jMenu1.add(mSwitchUser);
 
         jMenuBar1.add(jMenu1);
 

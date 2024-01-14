@@ -95,7 +95,8 @@ public class AddQuestion extends javax.swing.JInternalFrame {
 
         txtTitle.setFont(new java.awt.Font("Kantumruy Pro", 0, 14)); // NOI18N
 
-        btnSave.setBackground(new java.awt.Color(153, 255, 153));
+        btnSave.setBackground(new java.awt.Color(9, 200, 207));
+        btnSave.setForeground(new java.awt.Color(255, 255, 255));
         btnSave.setText("Save");
         btnSave.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {

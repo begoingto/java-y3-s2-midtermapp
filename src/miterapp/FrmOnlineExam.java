@@ -136,8 +136,9 @@ public class FrmOnlineExam extends javax.swing.JFrame {
             }
         });
 
-        btnNext.setBackground(new java.awt.Color(153, 255, 153));
+        btnNext.setBackground(new java.awt.Color(9, 200, 207));
         btnNext.setFont(new java.awt.Font("Kantumruy Pro", 0, 14)); // NOI18N
+        btnNext.setForeground(new java.awt.Color(255, 255, 255));
         btnNext.setText("Next >>");
         btnNext.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         btnNext.setFocusable(false);
