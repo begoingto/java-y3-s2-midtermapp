@@ -5,8 +5,14 @@
 package miterapp;
 
 import com.formdev.flatlaf.themes.FlatMacLightLaf;
+import java.awt.event.ActionListener;
+import javax.swing.JOptionPane;
+import javax.swing.ListModel;
+import javax.swing.Timer;
 import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
+import miterapp.models.Question;
+import miterapp.repositories.QuestionRepository;
 
 /**
  *
@@ -14,16 +20,64 @@ import javax.swing.UnsupportedLookAndFeelException;
  */
 public class FrmOnlineExam extends javax.swing.JFrame {
 
+    private final QuestionRepository questionRepo;
+    Timer timer;
+    Integer time;
+    Integer indexQ = 0;
+    Integer defaultTime = 5;
+
     /**
      * Creates new form FrmOnlineExam
      */
     public FrmOnlineExam() {
+        time = defaultTime;
         initComponents();
         this.setTitle("Form Online Exam");
         this.setLocationRelativeTo(null);
         this.setResizable(false);
-        lblTime.setText("Time: 00:00:20");
-        System.out.println(lblTime.getText());
+        this.questionRepo = new QuestionRepository();
+        lblTime.setText("Time: 00:00:" + defaultTime);
+        this.lblqSize.setText("Question " + (indexQ + 1) + " of " + questionRepo.items.size());
+        ActionListener taskPerformer = new ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent e) {
+                //...Perform a task...
+                lblTime.setText("Time: 00:00:" + (time--));
+                onNext();
+            }
+        };
+        this.timer = new Timer(1000, taskPerformer);
+        this.timer.setRepeats(true);
+        this.timer.start();
+    }
+
+    public void setCurrentQ() {
+        Question q = questionRepo.items.get(indexQ);
+        lblTitle.setText(q.getTitle());
+        listAnswer.setListData(q.getAnswers().toArray(new String[0]));
+    }
+
+    private void onNext() {
+        System.out.println("Index: "+ indexQ);
+        if (time.equals(0)) {
+            indexQ += 1;
+            lblqSize.setText("Question " + (indexQ + 1) + " of " + questionRepo.items.size());
+            time = defaultTime;
+            if (indexQ.equals(questionRepo.items.size())) {
+                JOptionPane.showMessageDialog(rootPane, "You have exam successfully.");
+                System.exit(0);
+            }
+            setCurrentQ();
+        }
+    }
+
+    private void onPrev() {
+        System.out.println("Index: "+ indexQ);
+        if (indexQ >= 1) {
+            lblqSize.setText("Question " + (indexQ) + " of " + questionRepo.items.size());
+            indexQ -= 1;
+            time = defaultTime;
+            setCurrentQ();
+        }
     }
 
     /**
@@ -35,51 +89,66 @@ public class FrmOnlineExam extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jLabel1 = new javax.swing.JLabel();
+        lblqSize = new javax.swing.JLabel();
         lblTime = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jList1 = new javax.swing.JList<>();
-        jButton1 = new javax.swing.JButton();
-        jButton2 = new javax.swing.JButton();
-        jLabel3 = new javax.swing.JLabel();
+        listAnswer = new javax.swing.JList<>();
+        btnPrev = new javax.swing.JButton();
+        btnNext = new javax.swing.JButton();
+        lblTitle = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
-        jLabel1.setFont(new java.awt.Font("Kantumruy Pro", 0, 14)); // NOI18N
-        jLabel1.setText("Question 1 of 20");
+        lblqSize.setFont(new java.awt.Font("Kantumruy Pro", 0, 14)); // NOI18N
+        lblqSize.setText("Question 1 of 20");
 
         lblTime.setFont(new java.awt.Font("Kantumruy Pro", 0, 14)); // NOI18N
         lblTime.setText("Time: 00:00:17");
 
-        jList1.setFont(jList1.getFont().deriveFont((float)14));
-        jList1.setModel(new javax.swing.AbstractListModel<String>() {
+        listAnswer.setFont(listAnswer.getFont().deriveFont((float)14));
+        listAnswer.setModel(new javax.swing.AbstractListModel<String>() {
             String[] strings = { "a) To gain knowledge and skills", "b) To earn a degree for career advancement", "c) To meet new people and expand my social network", "d) Other (please specify)" };
             public int getSize() { return strings.length; }
             public String getElementAt(int i) { return strings[i]; }
         });
-        jList1.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
-        jList1.setToolTipText("");
-        jList1.setAlignmentY(10.0F);
-        jList1.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        jList1.setMaximumSize(new java.awt.Dimension(373, 100));
-        jList1.setMinimumSize(new java.awt.Dimension(373, 100));
-        jList1.setPreferredSize(new java.awt.Dimension(373, 100));
-        jScrollPane1.setViewportView(jList1);
+        listAnswer.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
+        listAnswer.setToolTipText("");
+        listAnswer.setAlignmentY(10.0F);
+        listAnswer.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        listAnswer.setMaximumSize(new java.awt.Dimension(373, 100));
+        listAnswer.setMinimumSize(new java.awt.Dimension(373, 100));
+        listAnswer.setPreferredSize(new java.awt.Dimension(373, 100));
+        listAnswer.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                listAnswerMousePressed(evt);
+            }
+        });
+        jScrollPane1.setViewportView(listAnswer);
 
-        jButton1.setBackground(new java.awt.Color(255, 255, 204));
-        jButton1.setFont(new java.awt.Font("Kantumruy Pro", 0, 14)); // NOI18N
-        jButton1.setText("<< Prev");
-        jButton1.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        jButton1.setFocusable(false);
+        btnPrev.setBackground(new java.awt.Color(255, 255, 204));
+        btnPrev.setFont(new java.awt.Font("Kantumruy Pro", 0, 14)); // NOI18N
+        btnPrev.setText("<< Prev");
+        btnPrev.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        btnPrev.setFocusable(false);
+        btnPrev.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnPrevActionPerformed(evt);
+            }
+        });
 
-        jButton2.setBackground(new java.awt.Color(153, 255, 153));
-        jButton2.setFont(new java.awt.Font("Kantumruy Pro", 0, 14)); // NOI18N
-        jButton2.setText("Next >>");
-        jButton2.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        jButton2.setFocusable(false);
+        btnNext.setBackground(new java.awt.Color(153, 255, 153));
+        btnNext.setFont(new java.awt.Font("Kantumruy Pro", 0, 14)); // NOI18N
+        btnNext.setText("Next >>");
+        btnNext.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        btnNext.setFocusable(false);
+        btnNext.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnNextActionPerformed(evt);
+            }
+        });
 
-        jLabel3.setFont(new java.awt.Font("Kantumruy Pro", 0, 14)); // NOI18N
-        jLabel3.setText("1.What is your primary motivation for pursuing higher education?");
+        lblTitle.setFont(new java.awt.Font("Kantumruy Pro", 0, 14)); // NOI18N
+        lblTitle.setText("1.What is your primary motivation for pursuing higher education?");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -89,7 +158,7 @@ public class FrmOnlineExam extends javax.swing.JFrame {
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 133, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(lblqSize, javax.swing.GroupLayout.PREFERRED_SIZE, 133, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(lblTime, javax.swing.GroupLayout.PREFERRED_SIZE, 108, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(168, 168, 168))
@@ -97,32 +166,50 @@ public class FrmOnlineExam extends javax.swing.JFrame {
                         .addComponent(jScrollPane1)
                         .addContainerGap())
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 92, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(btnPrev, javax.swing.GroupLayout.PREFERRED_SIZE, 92, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 92, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(btnNext, javax.swing.GroupLayout.PREFERRED_SIZE, 92, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addContainerGap())
-                    .addComponent(jLabel3, javax.swing.GroupLayout.DEFAULT_SIZE, 654, Short.MAX_VALUE)))
+                    .addComponent(lblTitle, javax.swing.GroupLayout.DEFAULT_SIZE, 654, Short.MAX_VALUE)))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(lblqSize, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(lblTime, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(4, 4, 4)
-                .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(lblTitle, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(btnPrev, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnNext, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void btnNextActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNextActionPerformed
+        // TODO add your handling code here:
+        time = 0;
+        onNext();
+    }//GEN-LAST:event_btnNextActionPerformed
+
+    private void listAnswerMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_listAnswerMousePressed
+        // TODO add your handling code here:
+        System.out.println("Item: " + listAnswer.getSelectedValue());
+        System.out.println("Index: " + listAnswer.getSelectedIndex());
+    }//GEN-LAST:event_listAnswerMousePressed
+
+    private void btnPrevActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPrevActionPerformed
+        // TODO add your handling code here:
+        time = 0;
+        onPrev();
+    }//GEN-LAST:event_btnPrevActionPerformed
 
     /**
      * @param args the command line arguments
@@ -153,12 +240,12 @@ public class FrmOnlineExam extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton2;
-    private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel3;
-    private javax.swing.JList<String> jList1;
+    private javax.swing.JButton btnNext;
+    private javax.swing.JButton btnPrev;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JLabel lblTime;
+    private javax.swing.JLabel lblTitle;
+    private javax.swing.JLabel lblqSize;
+    private javax.swing.JList<String> listAnswer;
     // End of variables declaration//GEN-END:variables
 }

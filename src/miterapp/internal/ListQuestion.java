@@ -40,6 +40,7 @@ public class ListQuestion extends javax.swing.JInternalFrame {
         tbl.addRow(new Object[]{
             q.getId(),
             q.getTitle(),
+            q.getLevel(),
             q.getCorrectAnswer(),
             q.getAnswers().get(0),
             q.getAnswers().get(1),
@@ -84,14 +85,14 @@ public class ListQuestion extends javax.swing.JInternalFrame {
 
             },
             new String [] {
-                "ID", "Title", "Currect Answer", "Q1", "Q2", "Q3", "Q4"
+                "ID", "Title", "Level", "Currect Answer", "Q1", "Q2", "Q3", "Q4"
             }
         ) {
             Class[] types = new Class [] {
-                java.lang.Object.class, java.lang.String.class, java.lang.Integer.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.Object.class
+                java.lang.Object.class, java.lang.String.class, java.lang.String.class, java.lang.Integer.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.Object.class
             };
             boolean[] canEdit = new boolean [] {
-                false, false, false, true, false, true, true
+                false, false, false, false, true, false, true, true
             };
 
             public Class getColumnClass(int columnIndex) {
@@ -105,19 +106,19 @@ public class ListQuestion extends javax.swing.JInternalFrame {
         tblItem.setFocusable(false);
         jScrollPane2.setViewportView(tblItem);
         if (tblItem.getColumnModel().getColumnCount() > 0) {
-            tblItem.getColumnModel().getColumn(0).setMinWidth(30);
             tblItem.getColumnModel().getColumn(0).setPreferredWidth(30);
+            tblItem.getColumnModel().getColumn(2).setResizable(false);
         }
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 846, Short.MAX_VALUE)
+            .addGap(0, 999, Short.MAX_VALUE)
             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(layout.createSequentialGroup()
                     .addContainerGap()
-                    .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 834, Short.MAX_VALUE)
+                    .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 987, Short.MAX_VALUE)
                     .addContainerGap()))
         );
         layout.setVerticalGroup(

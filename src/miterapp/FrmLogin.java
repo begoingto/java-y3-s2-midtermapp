@@ -5,6 +5,7 @@
 package miterapp;
 
 import com.formdev.flatlaf.themes.FlatMacLightLaf;
+import javax.swing.JOptionPane;
 import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
 
@@ -119,6 +120,11 @@ public class FrmLogin extends javax.swing.JFrame {
         jPanel5.add(jLabel3, java.awt.BorderLayout.PAGE_START);
 
         txtPassword.setPreferredSize(new java.awt.Dimension(64, 40));
+        txtPassword.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                txtPasswordKeyPressed(evt);
+            }
+        });
         jPanel5.add(txtPassword, java.awt.BorderLayout.PAGE_END);
 
         jPanel6.add(jPanel5);
@@ -210,18 +216,32 @@ public class FrmLogin extends javax.swing.JFrame {
 
     private void btnLoginActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLoginActionPerformed
         // TODO add your handling code here:
+        this.onLogin();
+    }//GEN-LAST:event_btnLoginActionPerformed
+
+    private void onLogin(){
+        if(txtName.getText().isBlank() || txtPassword.getText().isBlank()){
+            JOptionPane.showMessageDialog(rootPane,"Username and Password is required.");
+            return;
+        }
         if(txtName.getText().trim().equals("admin")){
             new MainDashboard().setVisible(true);
         }else{
             new FrmOnlineExam().setVisible(true);
         }
         this.dispose();
-
-    }//GEN-LAST:event_btnLoginActionPerformed
-
+    }
+        
     private void jPanel9ComponentAdded(java.awt.event.ContainerEvent evt) {//GEN-FIRST:event_jPanel9ComponentAdded
         // TODO add your handling code here:
     }//GEN-LAST:event_jPanel9ComponentAdded
+
+    private void txtPasswordKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtPasswordKeyPressed
+        // TODO add your handling code here:
+        if(!txtPassword.getText().isBlank() && evt.getKeyCode()==10){
+            this.onLogin();
+        }
+    }//GEN-LAST:event_txtPasswordKeyPressed
 
     /**
      * @param args the command line arguments
