@@ -26,4 +26,5 @@ public class Question {
     private String title;
     private List<String> answers;
     private Integer correctAnswer;
+    private Integer answered;
 }

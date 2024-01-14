@@ -27,9 +27,6 @@ public class AddUser extends javax.swing.JInternalFrame {
         initComponents();
         UUID uuid = UUID.randomUUID();
         this.txtUuid.setText(uuid.toString());
-        if(user !=null){
-            this.btnClear.setEnabled(false);
-        }
     }
 
     public void setUserRepo(UserRepoitory repo) {

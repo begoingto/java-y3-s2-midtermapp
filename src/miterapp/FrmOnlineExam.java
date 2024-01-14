@@ -6,8 +6,9 @@ package miterapp;
 
 import com.formdev.flatlaf.themes.FlatMacLightLaf;
 import java.awt.event.ActionListener;
+import java.util.HashMap;
+import java.util.Map;
 import javax.swing.JOptionPane;
-import javax.swing.ListModel;
 import javax.swing.Timer;
 import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
@@ -25,6 +26,8 @@ public class FrmOnlineExam extends javax.swing.JFrame {
     Integer time;
     Integer indexQ = 0;
     Integer defaultTime = 5;
+    Question currentQ;
+    Map<Integer, Question> answereds = new HashMap<>();
 
     /**
      * Creates new form FrmOnlineExam
@@ -36,6 +39,7 @@ public class FrmOnlineExam extends javax.swing.JFrame {
         this.setLocationRelativeTo(null);
         this.setResizable(false);
         this.questionRepo = new QuestionRepository();
+        setCurrentQ();
         lblTime.setText("Time: 00:00:" + defaultTime);
         this.lblqSize.setText("Question " + (indexQ + 1) + " of " + questionRepo.items.size());
         ActionListener taskPerformer = new ActionListener() {
@@ -51,27 +55,49 @@ public class FrmOnlineExam extends javax.swing.JFrame {
     }
 
     public void setCurrentQ() {
-        Question q = questionRepo.items.get(indexQ);
-        lblTitle.setText(q.getTitle());
-        listAnswer.setListData(q.getAnswers().toArray(new String[0]));
+        currentQ = questionRepo.items.get(indexQ);
+        lblTitle.setText(currentQ.getTitle());
+        listAnswer.setListData(currentQ.getAnswers().toArray(new String[0]));
     }
 
     private void onNext() {
-        System.out.println("Index: "+ indexQ);
+        System.out.println("Index: " + indexQ);
         if (time.equals(0)) {
             indexQ += 1;
-            lblqSize.setText("Question " + (indexQ + 1) + " of " + questionRepo.items.size());
             time = defaultTime;
-            if (indexQ.equals(questionRepo.items.size())) {
-                JOptionPane.showMessageDialog(rootPane, "You have exam successfully.");
-                System.exit(0);
+            if (indexQ >= questionRepo.items.size()) {
+                btnNext.setEnabled(false);
+                timer.stop();
+                timer.setRepeats(false);
+                int dialog = JOptionPane.showOptionDialog(
+                        rootPane,
+                        "Congratulations⚜",
+                        "Success",
+                        0,
+                        JOptionPane.INFORMATION_MESSAGE,
+                        null,
+                        new Object[]{
+                            "View Result", "Close"
+                        }, null);
+                if (dialog == 0) {
+                    FrmReport report = new FrmReport();
+                    report.setAnswered(answereds);
+                    report.setVisible(true);
+                    this.dispose();
+                    return;
+                } else {
+                    System.exit(0);
+                }
+            } else {
+                lblqSize.setText("Question " + (indexQ + 1) + " of " + questionRepo.items.size());
             }
             setCurrentQ();
+            this.answereds.put(currentQ.getId(), currentQ);
         }
     }
 
     private void onPrev() {
-        System.out.println("Index: "+ indexQ);
+        System.out.println("Index: " + indexQ);
         if (indexQ >= 1) {
             lblqSize.setText("Question " + (indexQ) + " of " + questionRepo.items.size());
             indexQ -= 1;
@@ -202,8 +228,9 @@ public class FrmOnlineExam extends javax.swing.JFrame {
 
     private void listAnswerMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_listAnswerMousePressed
         // TODO add your handling code here:
-        System.out.println("Item: " + listAnswer.getSelectedValue());
-        System.out.println("Index: " + listAnswer.getSelectedIndex());
+        System.out.println("SelectedAnswered: " + listAnswer.getSelectedIndex());
+        currentQ.setAnswered(listAnswer.getSelectedIndex());
+        this.answereds.put(currentQ.getId(), currentQ);
     }//GEN-LAST:event_listAnswerMousePressed
 
     private void btnPrevActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPrevActionPerformed
