@@ -5,23 +5,41 @@
 package miterapp;
 
 import com.formdev.flatlaf.themes.FlatMacLightLaf;
+import java.awt.Image;
+import java.nio.file.Paths;
+import java.util.List;
+import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
 import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
+import miterapp.models.User;
+import miterapp.repositories.UserRepoitory;
 
 /**
  *
  * @author begoingtodev
  */
 public class FrmLogin extends javax.swing.JFrame {
+
+    public String path = Paths.get("").toAbsolutePath().toString().concat("/data/imgs");
+    private boolean showPwd = false;
+    private final UserRepoitory userRepo;
+
     /**
      * Creates new form FrmLogin
      */
     public FrmLogin() {
         initComponents();
-        this.setTitle("Login Form");
+        userRepo = new UserRepoitory();
+//        this.setTitle("Login Form");
         this.setLocationRelativeTo(null);
         this.setResizable(false);
+//        System.out.println("Folder"+ files[0]);
+        ImageIcon ic = new ImageIcon(this.path + "/login.png");
+        Image img = ic.getImage();
+        Image newImg = img.getScaledInstance(this.lblRight.getWidth(), lblRight.getHeight(), this.lblRight.getWidth());
+        ic = new ImageIcon(newImg);
+        this.lblRight.setIcon(ic);
     }
 
     /**
@@ -45,11 +63,12 @@ public class FrmLogin extends javax.swing.JFrame {
         jPanel5 = new javax.swing.JPanel();
         jLabel3 = new javax.swing.JLabel();
         txtPassword = new javax.swing.JPasswordField();
-        checkShowPass = new javax.swing.JCheckBox();
+        lblshowPwd = new javax.swing.JLabel();
         jPanel8 = new javax.swing.JPanel();
         btnLogin = new javax.swing.JButton();
         jPanel10 = new javax.swing.JPanel();
         jPanel9 = new javax.swing.JPanel();
+        lblRight = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         getContentPane().setLayout(new javax.swing.BoxLayout(getContentPane(), javax.swing.BoxLayout.X_AXIS));
@@ -58,8 +77,8 @@ public class FrmLogin extends javax.swing.JFrame {
 
         jPanel3.setRequestFocusEnabled(false);
 
-        jLabel2.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
-        jLabel2.setForeground(new java.awt.Color(51, 153, 255));
+        jLabel2.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
+        jLabel2.setForeground(new java.awt.Color(9, 200, 207));
         jLabel2.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel2.setText("Welcome to Exam Online");
         jLabel2.setPreferredSize(new java.awt.Dimension(231, 40));
@@ -68,17 +87,17 @@ public class FrmLogin extends javax.swing.JFrame {
         jPanel3.setLayout(jPanel3Layout);
         jPanel3Layout.setHorizontalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel3Layout.createSequentialGroup()
-                .addGap(87, 87, 87)
-                .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(93, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
+                .addContainerGap(61, Short.MAX_VALUE)
+                .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 299, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(51, 51, 51))
         );
         jPanel3Layout.setVerticalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
-                .addContainerGap(44, Short.MAX_VALUE)
+                .addContainerGap(43, Short.MAX_VALUE)
                 .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(37, 37, 37))
+                .addGap(38, 38, 38))
         );
 
         jPanel1.add(jPanel3);
@@ -129,9 +148,12 @@ public class FrmLogin extends javax.swing.JFrame {
 
         jPanel6.add(jPanel5);
 
-        checkShowPass.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                checkShowPassActionPerformed(evt);
+        lblshowPwd.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        lblshowPwd.setIcon(new javax.swing.ImageIcon(getClass().getResource("/miterapp/icons/eye-slash-regular.png"))); // NOI18N
+        lblshowPwd.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        lblshowPwd.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                lblshowPwdMouseClicked(evt);
             }
         });
 
@@ -143,15 +165,15 @@ public class FrmLogin extends javax.swing.JFrame {
                 .addGap(82, 82, 82)
                 .addComponent(jPanel6, javax.swing.GroupLayout.PREFERRED_SIZE, 231, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(checkShowPass)
-                .addContainerGap(62, Short.MAX_VALUE))
+                .addComponent(lblshowPwd, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(51, Short.MAX_VALUE))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(checkShowPass)
-                    .addComponent(jPanel6, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jPanel6, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(lblshowPwd, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap())
         );
 
@@ -160,7 +182,7 @@ public class FrmLogin extends javax.swing.JFrame {
         jPanel8.setPreferredSize(new java.awt.Dimension(400, 45));
         jPanel8.setRequestFocusEnabled(false);
 
-        btnLogin.setBackground(new java.awt.Color(51, 153, 255));
+        btnLogin.setBackground(new java.awt.Color(9, 200, 207));
         btnLogin.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         btnLogin.setForeground(new java.awt.Color(255, 255, 255));
         btnLogin.setText("Login");
@@ -194,54 +216,64 @@ public class FrmLogin extends javax.swing.JFrame {
 
         jPanel9.setForeground(new java.awt.Color(255, 153, 255));
         jPanel9.setPreferredSize(new java.awt.Dimension(400, 417));
-        jPanel9.addContainerListener(new java.awt.event.ContainerAdapter() {
-            public void componentAdded(java.awt.event.ContainerEvent evt) {
-                jPanel9ComponentAdded(evt);
-            }
-        });
         jPanel9.setLayout(new java.awt.BorderLayout());
+
+        lblRight.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        lblRight.setMaximumSize(new java.awt.Dimension(400, 417));
+        lblRight.setMinimumSize(new java.awt.Dimension(400, 417));
+        lblRight.setPreferredSize(new java.awt.Dimension(400, 417));
+        jPanel9.add(lblRight, java.awt.BorderLayout.CENTER);
+
         getContentPane().add(jPanel9);
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-
-    private void checkShowPassActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_checkShowPassActionPerformed
-        // TODO add your handling code here:
-        if (this.checkShowPass.isSelected()) {
-            this.txtPassword.setEchoChar((char) 0);
-        } else {
-            this.txtPassword.setEchoChar('*');
-        }
-    }//GEN-LAST:event_checkShowPassActionPerformed
 
     private void btnLoginActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLoginActionPerformed
         // TODO add your handling code here:
         this.onLogin();
     }//GEN-LAST:event_btnLoginActionPerformed
 
-    private void onLogin(){
-        if(txtName.getText().isBlank() || txtPassword.getText().isBlank()){
-            JOptionPane.showMessageDialog(rootPane,"Username and Password is required.");
+    private void onLogin() {
+        if (txtName.getText().trim().isBlank() || txtPassword.getText().isBlank()) {
+            JOptionPane.showMessageDialog(rootPane, "Username and Password is required.", "Validation", JOptionPane.ERROR_MESSAGE);
             return;
         }
-        if(txtName.getText().trim().equals("admin")){
-            new MainDashboard().setVisible(true);
-        }else{
-            new FrmOnlineExam().setVisible(true);
+        List<User> users = userRepo.items.stream().filter(u -> u.getUsername().equalsIgnoreCase(txtName.getText().trim())).toList();
+        if (users.isEmpty()) {
+            JOptionPane.showMessageDialog(rootPane, "Your account does't exist.Please contact Administrator.", "Warning", JOptionPane.WARNING_MESSAGE);
+            return;
+        }
+        User u = users.get(0);
+        if (!u.getPassword().equals(txtPassword.getText())) {
+            JOptionPane.showMessageDialog(rootPane, "Password is not correct try again!!!.", "Validation", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+        switch (u.getRole()) {
+            case "ADMIN" -> new MainDashboard().setVisible(true);
+            default -> new FrmOnlineExam().setVisible(true);
         }
         this.dispose();
     }
-        
-    private void jPanel9ComponentAdded(java.awt.event.ContainerEvent evt) {//GEN-FIRST:event_jPanel9ComponentAdded
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jPanel9ComponentAdded
 
     private void txtPasswordKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtPasswordKeyPressed
         // TODO add your handling code here:
-        if(!txtPassword.getText().isBlank() && evt.getKeyCode()==10){
+        if (!txtPassword.getText().isBlank() && evt.getKeyCode() == 10) {
             this.onLogin();
         }
     }//GEN-LAST:event_txtPasswordKeyPressed
+
+    private void lblshowPwdMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblshowPwdMouseClicked
+        // TODO add your handling code here:
+        this.showPwd = !this.showPwd;
+        if (this.showPwd) {
+            this.lblshowPwd.setIcon(new javax.swing.ImageIcon(getClass().getResource("/miterapp/icons/eye-regular.png")));
+            this.txtPassword.setEchoChar((char) 0);
+        } else {
+            this.lblshowPwd.setIcon(new javax.swing.ImageIcon(getClass().getResource("/miterapp/icons/eye-slash-regular.png")));
+            this.txtPassword.setEchoChar('*');
+        }
+    }//GEN-LAST:event_lblshowPwdMouseClicked
 
     /**
      * @param args the command line arguments
@@ -273,7 +305,6 @@ public class FrmLogin extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnLogin;
-    private javax.swing.JCheckBox checkShowPass;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
@@ -287,6 +318,8 @@ public class FrmLogin extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel7;
     private javax.swing.JPanel jPanel8;
     private javax.swing.JPanel jPanel9;
+    private javax.swing.JLabel lblRight;
+    private javax.swing.JLabel lblshowPwd;
     private javax.swing.JTextField txtName;
     private javax.swing.JPasswordField txtPassword;
     // End of variables declaration//GEN-END:variables

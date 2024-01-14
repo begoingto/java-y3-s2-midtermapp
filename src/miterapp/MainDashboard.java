@@ -58,6 +58,7 @@ public class MainDashboard extends javax.swing.JFrame {
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenu1 = new javax.swing.JMenu();
         jMenuItem5 = new javax.swing.JMenuItem();
+        mSwitchUser = new javax.swing.JMenuItem();
         jMenu2 = new javax.swing.JMenu();
         jMenuItem2 = new javax.swing.JMenuItem();
         jMenuItem1 = new javax.swing.JMenuItem();
@@ -100,6 +101,14 @@ public class MainDashboard extends javax.swing.JFrame {
             }
         });
         jMenu1.add(jMenuItem5);
+
+        mSwitchUser.setText("Switch User");
+        mSwitchUser.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                mSwitchUserActionPerformed(evt);
+            }
+        });
+        jMenu1.add(mSwitchUser);
 
         jMenuBar1.add(jMenu1);
 
@@ -237,6 +246,12 @@ public class MainDashboard extends javax.swing.JFrame {
         System.out.println("ComponentShown: Event...");
     }//GEN-LAST:event_jDesktopPane1ComponentShown
 
+    private void mSwitchUserActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mSwitchUserActionPerformed
+        // TODO add your handling code here:
+        this.dispose();
+        new FrmLogin().setVisible(true);
+    }//GEN-LAST:event_mSwitchUserActionPerformed
+
     public void showChild(JInternalFrame frm) {
         if (frmOpening.contains(frm.getName())) {
             JOptionPane.showMessageDialog(rootPane, "Your " + frm.getName() + " form is opening...");
@@ -310,5 +325,6 @@ public class MainDashboard extends javax.swing.JFrame {
     private javax.swing.JMenuItem jMenuItem4;
     private javax.swing.JMenuItem jMenuItem5;
     private javax.swing.JMenuItem mListUser;
+    private javax.swing.JMenuItem mSwitchUser;
     // End of variables declaration//GEN-END:variables
 }
