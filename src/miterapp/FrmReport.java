@@ -28,8 +28,9 @@ public class FrmReport extends javax.swing.JFrame {
     public void setAnswered(Map<Integer, Question> answereds) {
         for (Map.Entry<Integer, Question> entry : answereds.entrySet()) {
             Question q = entry.getValue();
-            Integer currect = q.getCorrectAnswer()-1;
-            System.out.println("ID: " + q.getId());
+            Integer currect = q.getCorrectAnswer();
+            Integer answered = q.getAnswered() != null ? q.getAnswered() : null;
+            System.out.println("Q: " + q);
 
             JPanel p = new JPanel();
             p.setLayout(new java.awt.GridLayout(0, 1, 0, 10));
@@ -39,23 +40,43 @@ public class FrmReport extends javax.swing.JFrame {
             p.add(title);
 
             int index = 0;
-            Character[] i  = new Character[]{'a','b','d','e'};
+            Character[] i = new Character[]{'a', 'b', 'd', 'e'};
             for (String a : q.getAnswers()) {
                 JLabel q1 = new JLabel();
-                q1.setText("  "+ i[index] + "). " + a);
-                if (q.getAnswered().equals(currect) && q.getAnswered() == index) {
-                    q1.setForeground(new java.awt.Color(9, 200, 207));
-                }
-                if ((!currect.equals(q.getAnswered())) && q.getAnswered() == index) {
-                    q1.setForeground(Color.red);
+                q1.setText("  " + i[index] + "). " + a);
+                if (q.getAnswered() != null) {
+                    if (currect.equals(answered) && answered == (index + 1)) {
+                        q1.setForeground(new java.awt.Color(9, 200, 207));
+                    } else if ((!currect.equals(answered)) && answered == (index + 1)) {
+                        q1.setForeground(Color.red);
+                    } else {
+                        if (currect == (index + 1)) {
+                            q1.setForeground(new java.awt.Color(9, 200, 207));
+                        }
+                    }
                 } else {
-                    if (currect == index) {
+                    if (currect == (index + 1)) {
                         q1.setForeground(new java.awt.Color(9, 200, 207));
                     }
                 }
                 p.add(q1);
                 index++;
             }
+
+            JLabel ans = new JLabel();
+            String ansText = " Answered: ";
+            if (answered == null) {
+                ansText += "skipped";
+            } else {
+                if (answered.equals(currect)) {
+                    ansText += "Currect";
+                } else {
+                    ansText += "Wrong?";
+                }
+            }
+            ans.setText(ansText);
+            ans.setFont(new java.awt.Font("Segoe UI", 1, 12));
+            p.add(ans);
 
             JLabel sybol = new JLabel();
             sybol.setText("-".repeat(500));
@@ -96,6 +117,8 @@ public class FrmReport extends javax.swing.JFrame {
         jPanel1.setLayout(new java.awt.GridLayout(0, 1, 0, 10));
         jScrollPane1.setViewportView(jPanel1);
 
+        jLabel2.setBackground(new java.awt.Color(204, 204, 255));
+        jLabel2.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         jLabel2.setText("Answer Color:");
 
         jLabel3.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N

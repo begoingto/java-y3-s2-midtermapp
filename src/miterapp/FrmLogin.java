@@ -250,8 +250,12 @@ public class FrmLogin extends javax.swing.JFrame {
             return;
         }
         switch (u.getRole()) {
-            case "ADMIN" -> new MainDashboard().setVisible(true);
-            default -> new FrmOnlineExam().setVisible(true);
+            case "ADMIN" ->
+                new MainDashboard().setVisible(true);
+            default -> {
+                var o = new FrmOnlineExam(u);
+                o.setVisible(true);
+            }
         }
         this.dispose();
     }

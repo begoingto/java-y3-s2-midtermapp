@@ -13,6 +13,7 @@ import javax.swing.Timer;
 import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
 import miterapp.models.Question;
+import miterapp.models.User;
 import miterapp.repositories.QuestionRepository;
 
 /**
@@ -28,17 +29,25 @@ public class FrmOnlineExam extends javax.swing.JFrame {
     Integer defaultTime = 5;
     Question currentQ;
     Map<Integer, Question> answereds = new HashMap<>();
+    private final User auth;
 
     /**
      * Creates new form FrmOnlineExam
+     *
+     * @param user for login user processing online exam
      */
-    public FrmOnlineExam() {
+    public FrmOnlineExam(User user) {
+        auth = user;
+        System.out.println("User exam: " + user);
         time = defaultTime;
         initComponents();
         this.setTitle("Form Online Exam");
         this.setLocationRelativeTo(null);
         this.setResizable(false);
         this.questionRepo = new QuestionRepository();
+        if (indexQ == 0) {
+            btnPrev.setEnabled(false);
+        }
         setCurrentQ();
         lblTime.setText("Time: 00:00:" + defaultTime);
         this.lblqSize.setText("Question " + (indexQ + 1) + " of " + questionRepo.items.size());
@@ -46,6 +55,18 @@ public class FrmOnlineExam extends javax.swing.JFrame {
             public void actionPerformed(java.awt.event.ActionEvent e) {
                 //...Perform a task...
                 lblTime.setText("Time: 00:00:" + (time--));
+                if (indexQ == 0) {
+                    btnPrev.setEnabled(false);
+                }else{
+                    btnPrev.setEnabled(true);
+                }
+                if(indexQ+1==questionRepo.items.size()){
+                    btnNext.setEnabled(false);
+                }else{
+                     btnNext.setEnabled(true);
+                }
+                System.out.println("Current:"+ currentQ);
+                answereds.put(currentQ.getId(), currentQ);
                 onNext();
             }
         };
@@ -61,7 +82,6 @@ public class FrmOnlineExam extends javax.swing.JFrame {
     }
 
     private void onNext() {
-        System.out.println("Index: " + indexQ);
         if (time.equals(0)) {
             indexQ += 1;
             time = defaultTime;
@@ -97,7 +117,6 @@ public class FrmOnlineExam extends javax.swing.JFrame {
     }
 
     private void onPrev() {
-        System.out.println("Index: " + indexQ);
         if (indexQ >= 1) {
             lblqSize.setText("Question " + (indexQ) + " of " + questionRepo.items.size());
             indexQ -= 1;
@@ -229,7 +248,7 @@ public class FrmOnlineExam extends javax.swing.JFrame {
     private void listAnswerMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_listAnswerMousePressed
         // TODO add your handling code here:
         System.out.println("SelectedAnswered: " + listAnswer.getSelectedIndex());
-        currentQ.setAnswered(listAnswer.getSelectedIndex());
+        currentQ.setAnswered(listAnswer.getSelectedIndex()+1);
         this.answereds.put(currentQ.getId(), currentQ);
     }//GEN-LAST:event_listAnswerMousePressed
 
@@ -260,11 +279,11 @@ public class FrmOnlineExam extends javax.swing.JFrame {
         //</editor-fold>
 
         /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new FrmOnlineExam().setVisible(true);
-            }
-        });
+//        java.awt.EventQueue.invokeLater(new Runnable() {
+//            public void run() {
+//                new FrmOnlineExam().setVisible(true);
+//            }
+//        });
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
