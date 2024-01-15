@@ -30,7 +30,6 @@ public class FrmReport extends javax.swing.JFrame {
             Question q = entry.getValue();
             Integer currect = q.getCorrectAnswer();
             Integer answered = q.getAnswered() != null ? q.getAnswered() : null;
-            System.out.println("Q: " + q);
 
             JPanel p = new JPanel();
             p.setLayout(new java.awt.GridLayout(0, 1, 0, 10));

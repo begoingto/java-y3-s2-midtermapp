@@ -38,7 +38,6 @@ public class FrmOnlineExam extends javax.swing.JFrame {
      */
     public FrmOnlineExam(User user) {
         auth = user;
-        System.out.println("User exam: " + user);
         time = defaultTime;
         initComponents();
         this.setTitle("Form Online Exam");
@@ -65,7 +64,6 @@ public class FrmOnlineExam extends javax.swing.JFrame {
                 }else{
                      btnNext.setEnabled(true);
                 }
-                System.out.println("Current:"+ currentQ);
                 answereds.put(currentQ.getId(), currentQ);
                 onNext();
             }
