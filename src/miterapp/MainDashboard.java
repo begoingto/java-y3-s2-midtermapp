@@ -4,6 +4,7 @@
  */
 package miterapp;
 
+import java.awt.Dimension;
 import java.beans.PropertyVetoException;
 import java.util.ArrayList;
 import java.util.logging.Level;
@@ -29,6 +30,7 @@ public class MainDashboard extends javax.swing.JFrame {
     private final QuestionRepository questionRepo;
     private final ListUser listUser = new ListUser();
     private final ListQuestion listQuestion = new ListQuestion();
+
     /**
      * Creates new form MainDashboard
      */
@@ -41,7 +43,6 @@ public class MainDashboard extends javax.swing.JFrame {
         listUser.setMainDashboard(this);
         listUser.setUserRepo(this.userRepo);
         listQuestion.setItems(this.questionRepo.items);
-
 
     }
 
@@ -224,7 +225,7 @@ public class MainDashboard extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_jDesktopPane1ComponentRemoved
 
-    
+
     private void mListUserActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mListUserActionPerformed
         // TODO add your handling code here:
         if (!frmOpening.contains(listUser.getName())) {
@@ -266,7 +267,10 @@ public class MainDashboard extends javax.swing.JFrame {
         noFull.add("updateQuestion");
         try {
             if (noFull.contains(frm.getName())) {
-
+                Dimension desktopSize = jDesktopPane1.getSize();
+                Dimension jInternalFrameSize = frm.getSize();
+                frm.setLocation((desktopSize.width - jInternalFrameSize.width) / 2,
+                        (desktopSize.height - jInternalFrameSize.height) / 2);
             } else {
                 frm.setMaximum(true);
             }

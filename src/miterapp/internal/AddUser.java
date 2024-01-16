@@ -301,6 +301,7 @@ public class AddUser extends javax.swing.JInternalFrame {
         this.txtUsername.setText("");
         this.txtFullName.setText("");
         this.txtPassword.setText("");
+        this.txtConfirmPassword.setText(null);
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
