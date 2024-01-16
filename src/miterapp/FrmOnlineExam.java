@@ -122,6 +122,10 @@ public class FrmOnlineExam extends javax.swing.JFrame {
             setCurrentQ();
         }
     }
+    
+    private void saveReport(){
+        
+    }
 
     /**
      * This method is called from within the constructor to initialize the form.

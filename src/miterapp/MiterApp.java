@@ -7,6 +7,7 @@ package miterapp;
 import com.formdev.flatlaf.themes.FlatMacLightLaf;
 import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
+import miterapp.utils.FileManagement;
 
 /**
  *
@@ -30,6 +31,7 @@ public class MiterApp {
         }
 //        MainDashboard d = new MainDashboard();
 //        d.setVisible(true);
+        if(FileManagement.createDirData()) System.out.println("Create Data folder for store data");
         FrmLogin login = new FrmLogin();
         login.setVisible(true);
     }

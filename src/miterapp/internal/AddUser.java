@@ -19,6 +19,9 @@ public class AddUser extends javax.swing.JInternalFrame {
     private ListUser listUser;
     User user = new User();
     private Integer userIndex;
+    private boolean showPwd = false;    
+    private boolean showConfirm = false;
+
 
     /**
      * Creates new form AddUser
@@ -27,6 +30,8 @@ public class AddUser extends javax.swing.JInternalFrame {
         initComponents();
         UUID uuid = UUID.randomUUID();
         this.txtUuid.setText(uuid.toString());
+        txtPassword.setRequestFocusEnabled(true);
+        txtConfirmPassword.setRequestFocusEnabled(true);
     }
 
     public void setUserRepo(UserRepoitory repo) {
@@ -66,6 +71,8 @@ public class AddUser extends javax.swing.JInternalFrame {
         jLabel8 = new javax.swing.JLabel();
         txtConfirmPassword = new javax.swing.JPasswordField();
         btnClear = new javax.swing.JButton();
+        lblshowPwd = new javax.swing.JLabel();
+        lblshowConfirm = new javax.swing.JLabel();
 
         jLabel2.setText("UUID");
 
@@ -113,6 +120,24 @@ public class AddUser extends javax.swing.JInternalFrame {
             }
         });
 
+        lblshowPwd.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        lblshowPwd.setIcon(new javax.swing.ImageIcon(getClass().getResource("/miterapp/icons/eye-slash-regular.png"))); // NOI18N
+        lblshowPwd.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        lblshowPwd.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                lblshowPwdMouseClicked(evt);
+            }
+        });
+
+        lblshowConfirm.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        lblshowConfirm.setIcon(new javax.swing.ImageIcon(getClass().getResource("/miterapp/icons/eye-slash-regular.png"))); // NOI18N
+        lblshowConfirm.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        lblshowConfirm.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                lblshowConfirmMouseClicked(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -140,7 +165,11 @@ public class AddUser extends javax.swing.JInternalFrame {
                     .addComponent(txtUsername)
                     .addComponent(txtFullName)
                     .addComponent(txtPassword))
-                .addGap(137, 137, 137))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(lblshowPwd, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(lblshowConfirm, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(101, 101, 101))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -162,13 +191,18 @@ public class AddUser extends javax.swing.JInternalFrame {
                     .addComponent(cbGender, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel5))
                 .addGap(18, 18, 18)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel6)
-                    .addComponent(txtPassword, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel8)
-                    .addComponent(txtConfirmPassword, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                .addComponent(jLabel6)
+                                .addComponent(txtPassword, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(lblshowPwd, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel8)
+                            .addComponent(txtConfirmPassword, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addComponent(lblshowConfirm, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(14, 14, 14)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(cbRole, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -177,7 +211,7 @@ public class AddUser extends javax.swing.JInternalFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnAdd, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnClear, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(116, Short.MAX_VALUE))
+                .addContainerGap(107, Short.MAX_VALUE))
         );
 
         pack();
@@ -218,6 +252,30 @@ public class AddUser extends javax.swing.JInternalFrame {
         }
     }//GEN-LAST:event_btnClearActionPerformed
 
+    private void lblshowPwdMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblshowPwdMouseClicked
+        // TODO add your handling code here:
+        this.showPwd = !this.showPwd;
+        if (this.showPwd) {
+            this.lblshowPwd.setIcon(new javax.swing.ImageIcon(getClass().getResource("/miterapp/icons/eye-regular.png")));
+            this.txtPassword.setEchoChar((char) 0);
+        } else {
+            this.lblshowPwd.setIcon(new javax.swing.ImageIcon(getClass().getResource("/miterapp/icons/eye-slash-regular.png")));
+            this.txtPassword.setEchoChar('*');
+        }
+    }//GEN-LAST:event_lblshowPwdMouseClicked
+
+    private void lblshowConfirmMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblshowConfirmMouseClicked
+        // TODO add your handling code here:
+        this.showConfirm = !this.showConfirm;
+        if (this.showConfirm) {
+            this.lblshowConfirm.setIcon(new javax.swing.ImageIcon(getClass().getResource("/miterapp/icons/eye-regular.png")));
+            this.txtConfirmPassword.setEchoChar((char) 0);
+        } else {
+            this.lblshowConfirm.setIcon(new javax.swing.ImageIcon(getClass().getResource("/miterapp/icons/eye-slash-regular.png")));
+            this.txtConfirmPassword.setEchoChar('*');
+        }
+    }//GEN-LAST:event_lblshowConfirmMouseClicked
+
     public void setUserToField(User user) {
         this.user = user;
         this.btnAdd.setText("Update");
@@ -257,6 +315,8 @@ public class AddUser extends javax.swing.JInternalFrame {
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
+    private javax.swing.JLabel lblshowConfirm;
+    private javax.swing.JLabel lblshowPwd;
     private javax.swing.JPasswordField txtConfirmPassword;
     private javax.swing.JTextField txtFullName;
     private javax.swing.JPasswordField txtPassword;
