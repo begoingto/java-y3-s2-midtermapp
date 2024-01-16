@@ -192,6 +192,8 @@ public class MainDashboard extends javax.swing.JFrame {
         // TODO add your handling code here:
         if (!frmOpening.contains(listQuestion.getName())) {
             listQuestion.setName("listQuestion");
+            listQuestion.setMainDashboard(this);
+            listQuestion.setItemRepo(questionRepo);
             listQuestion.loadDataTable();
             this.showChild(listQuestion);
         }
@@ -261,6 +263,7 @@ public class MainDashboard extends javax.swing.JFrame {
         noFull.add("addUser");
         noFull.add("updateUser");
         noFull.add("addQuestion");
+        noFull.add("updateQuestion");
         try {
             if (noFull.contains(frm.getName())) {
 

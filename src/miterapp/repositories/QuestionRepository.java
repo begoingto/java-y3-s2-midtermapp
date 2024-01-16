@@ -22,11 +22,26 @@ public class QuestionRepository extends MainService<Question>{
     
     public void AddQuestion(Question q){
     
-        List<Question> users = new ArrayList<>(){{
+        List<Question> objs = new ArrayList<>(){{
             addAll(items);
         }};
-        users.add(q);
-        super.writeItemsToJson(users);
+        objs.add(q);
+        super.writeItemsToJson(objs);
+    }
+ 
+    public void updateItem(int index, Question q){
+        List<Question> objs = new ArrayList<>(){{
+            addAll(items);
+        }};
+        objs.set(index, q);
+        super.writeItemsToJson(objs);
     }
     
+    public void deteleItem(Question q){
+        List<Question> objs = new ArrayList<>(){{
+            addAll(items);
+        }};
+        objs.remove(q);
+        super.writeItemsToJson(objs);
+    }
 }

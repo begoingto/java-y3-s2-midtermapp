@@ -7,7 +7,9 @@ package miterapp.internal;
 import java.util.ArrayList;
 import java.util.List;
 import javax.swing.table.DefaultTableModel;
+import miterapp.MainDashboard;
 import miterapp.models.Question;
+import miterapp.repositories.QuestionRepository;
 
 /**
  *
@@ -17,6 +19,9 @@ public class ListQuestion extends javax.swing.JInternalFrame {
 
     private List<Question> items = new ArrayList<>();
     private final DefaultTableModel tbl;
+    private MainDashboard mainDashboard;
+    private QuestionRepository questionRepo;
+    
 
     /**
      * Creates new form ListQuestion
@@ -35,6 +40,18 @@ public class ListQuestion extends javax.swing.JInternalFrame {
             this.addItem(item);
         }
     }
+    
+    public void setItemRepo(QuestionRepository repo){
+        this.questionRepo = repo;
+    }
+    
+    public void setMainDashboard(MainDashboard main){
+        this.mainDashboard = main;
+    }
+    
+    public void removeItem(Integer index){
+        this.tbl.removeRow(index);
+    }
 
     public void addItem(Question q) {
         tbl.addRow(new Object[]{
@@ -47,6 +64,18 @@ public class ListQuestion extends javax.swing.JInternalFrame {
             q.getAnswers().get(2),
             q.getAnswers().get(3)
         });
+    }
+    
+    public void setUpdateItem(int index, Question q){
+        tbl.setValueAt(q.getId(), index, 0);
+        tbl.setValueAt(q.getTitle(), index, 1);
+        tbl.setValueAt(q.getLevel(), index, 2);
+        tbl.setValueAt(q.getCorrectAnswer(), index, 3);
+        tbl.setValueAt(q.getAnswers().get(0), index, 4);
+        tbl.setValueAt(q.getAnswers().get(1), index, 5);
+        tbl.setValueAt(q.getAnswers().get(2), index, 6);
+        tbl.setValueAt(q.getAnswers().get(3), index, 7);
+        
     }
 
     /**
@@ -104,6 +133,11 @@ public class ListQuestion extends javax.swing.JInternalFrame {
             }
         });
         tblItem.setFocusable(false);
+        tblItem.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                tblItemMousePressed(evt);
+            }
+        });
         jScrollPane2.setViewportView(tblItem);
         if (tblItem.getColumnModel().getColumnCount() > 0) {
             tblItem.getColumnModel().getColumn(0).setPreferredWidth(30);
@@ -137,6 +171,18 @@ public class ListQuestion extends javax.swing.JInternalFrame {
         // TODO add your handling code here:
         System.out.println("Closing...");
     }//GEN-LAST:event_formInternalFrameClosed
+
+    private void tblItemMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblItemMousePressed
+        // TODO add your handling code here:
+        Integer selectedIndex = this.tblItem.getSelectedRow();
+        Question selectedQ = items.get(selectedIndex);
+        AddQuestion fq = new AddQuestion();
+        fq.setName("updateQuestion");
+        fq.setItemRepo(questionRepo);
+        fq.setListItem(this);
+        fq.setItemToField(selectedQ,selectedIndex);
+        mainDashboard.showChild(fq);
+    }//GEN-LAST:event_tblItemMousePressed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

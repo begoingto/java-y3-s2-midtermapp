@@ -15,21 +15,43 @@ import miterapp.repositories.QuestionRepository;
  * @author begoingtodev
  */
 public class AddQuestion extends javax.swing.JInternalFrame {
+
     private QuestionRepository questionRepo;
     private ListQuestion listQuestion;
+    private Integer indexQ;
+    private Question questionObj;
+
     /**
      * Creates new form AddQuestion
      */
     public AddQuestion() {
         initComponents();
+        if (indexQ == null) {
+            btnSave.setText("Save");
+            btnClear.setText("Clear");
+        }
     }
-    
-    public void setItemRepo(QuestionRepository repo){
+
+    public void setItemRepo(QuestionRepository repo) {
         this.questionRepo = repo;
     }
-    
-    public void setListItem(ListQuestion listItem){
+
+    public void setListItem(ListQuestion listItem) {
         this.listQuestion = listItem;
+    }
+
+    public void setItemToField(Question q, int index) {
+        this.indexQ = index;
+        this.questionObj = q;
+        btnSave.setText("Update");
+        btnClear.setText("Delete");
+        cbLevel.setSelectedItem(q.getLevel());
+        txtTitle.setText(q.getTitle());
+        txtCorrectAnswer.setText(q.getCorrectAnswer().toString());
+        txtq1.setText(q.getAnswers().get(0));
+        txtq2.setText(q.getAnswers().get(1));
+        txtq3.setText(q.getAnswers().get(2));
+        txtq4.setText(q.getAnswers().get(3));
     }
 
     /**
@@ -98,6 +120,7 @@ public class AddQuestion extends javax.swing.JInternalFrame {
         btnSave.setBackground(new java.awt.Color(9, 200, 207));
         btnSave.setForeground(new java.awt.Color(255, 255, 255));
         btnSave.setText("Save");
+        btnSave.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         btnSave.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnSaveActionPerformed(evt);
@@ -111,6 +134,7 @@ public class AddQuestion extends javax.swing.JInternalFrame {
 
         btnClear.setBackground(new java.awt.Color(255, 153, 153));
         btnClear.setText("Clear");
+        btnClear.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         btnClear.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnClearActionPerformed(evt);
@@ -148,7 +172,7 @@ public class AddQuestion extends javax.swing.JInternalFrame {
                                     .addComponent(jLabel7)
                                     .addGap(18, 18, 18)
                                     .addComponent(txtq4, javax.swing.GroupLayout.PREFERRED_SIZE, 337, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                            .addComponent(btnClear, javax.swing.GroupLayout.PREFERRED_SIZE, 64, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                            .addComponent(btnClear, javax.swing.GroupLayout.PREFERRED_SIZE, 83, javax.swing.GroupLayout.PREFERRED_SIZE)))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(130, 130, 130)
                         .addComponent(jLabel2)
@@ -210,19 +234,17 @@ public class AddQuestion extends javax.swing.JInternalFrame {
 
     private void btnSaveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSaveActionPerformed
         // TODO add your handling code here:
-        if(
-          this.txtTitle.getText().isBlank() ||
-          this.txtq1.getText().isBlank() ||
-          this.txtq2.getText().isBlank() ||
-          this.txtq3.getText().isBlank() ||
-          this.txtq4.getText().isBlank() ||
-          this.txtCorrectAnswer.getText().isBlank()
-                ){
+        if (this.txtTitle.getText().isBlank()
+                || this.txtq1.getText().isBlank()
+                || this.txtq2.getText().isBlank()
+                || this.txtq3.getText().isBlank()
+                || this.txtq4.getText().isBlank()
+                || this.txtCorrectAnswer.getText().isBlank()) {
             JOptionPane.showMessageDialog(rootPane, "Please all input are required.");
             return;
         }
         Question q = new Question();
-        q.setId(questionRepo.items.size()+1);
+        q.setId(questionRepo.items.size() + 1);
         q.setLevel(this.cbLevel.getSelectedItem().toString());
         q.setTitle(this.txtTitle.getText());
         q.setCorrectAnswer(Integer.valueOf(this.txtCorrectAnswer.getText()));
@@ -232,17 +254,34 @@ public class AddQuestion extends javax.swing.JInternalFrame {
         a.add(this.txtq3.getText());
         a.add(this.txtq4.getText());
         q.setAnswers(a);
-        this.questionRepo.AddQuestion(q);
-        this.listQuestion.addItem(q);
-        JOptionPane.showMessageDialog(rootPane, "You have been add successfully");
+        if (indexQ == null) {
+            this.questionRepo.AddQuestion(q);
+            this.listQuestion.addItem(q);
+        } else {
+            q.setId(this.questionObj.getId());
+            this.questionRepo.updateItem(indexQ, q);
+            this.listQuestion.setUpdateItem(indexQ, q);
+        }
+        JOptionPane.showMessageDialog(rootPane, "You have been " + (indexQ == null ? "add" : "updated") + " successfully");
         this.clearForm();
+        this.dispose();
     }//GEN-LAST:event_btnSaveActionPerformed
 
     private void btnClearActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnClearActionPerformed
         // TODO add your handling code here:
+        if(indexQ==null){
+            this.clearForm();
+        }else{
+            int confirm = JOptionPane.showConfirmDialog(rootPane, "Are you sure!, You want to Delete it?", "Delete",JOptionPane.ERROR_MESSAGE, JOptionPane.ERROR_MESSAGE);
+            if(confirm==0){
+                this.questionRepo.deteleItem(this.questionObj);
+                this.listQuestion.removeItem(this.indexQ);
+            }
+            this.dispose();
+        }
     }//GEN-LAST:event_btnClearActionPerformed
-    
-    private void clearForm(){
+
+    private void clearForm() {
         this.txtTitle.setText(null);
         this.txtCorrectAnswer.setText(null);
         this.txtq1.setText(null);
