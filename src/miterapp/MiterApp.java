@@ -5,11 +5,8 @@
 package miterapp;
 
 import com.formdev.flatlaf.themes.FlatMacLightLaf;
-import java.io.IOException;
 import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
-import miterapp.utils.FileManagement;
-
 /**
  *
  * @author begoingtodev
@@ -30,17 +27,6 @@ public class MiterApp {
         } catch (UnsupportedLookAndFeelException e) {
             System.err.println("Error:" + e.getMessage());
 //            throw new IllegalAccessError(e.getMessage());
-        }
-//        MainDashboard d = new MainDashboard();
-//        d.setVisible(true);
-        if (FileManagement.createDirData()) {
-            System.out.println("Create Data folder for store data");
-        }
-        try {
-            FileManagement.createFile(null, "user.json");
-            FileManagement.createFile(null, "question.json");
-        } catch (IOException ex) {
-            System.err.println("Error:" + ex.getMessage());
         }
         FrmLogin login = new FrmLogin();
         login.setVisible(true);

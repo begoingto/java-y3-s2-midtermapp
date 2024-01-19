@@ -6,15 +6,26 @@ package miterapp;
 
 import com.formdev.flatlaf.themes.FlatMacLightLaf;
 import java.awt.event.ActionListener;
+import java.io.IOException;
+import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
+import java.util.UUID;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import javax.swing.Timer;
 import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
 import miterapp.models.Question;
+import miterapp.models.Report;
 import miterapp.models.User;
 import miterapp.repositories.QuestionRepository;
+import miterapp.repositories.ReportRepository;
+import miterapp.utils.FileManagement;
+import miterapp.utils.StringUtils;
 
 /**
  *
@@ -30,6 +41,7 @@ public class FrmOnlineExam extends javax.swing.JFrame {
     Question currentQ;
     Map<Integer, Question> answereds = new HashMap<>();
     private final User auth;
+    private final ReportRepository reportRepo;
 
     /**
      * Creates new form FrmOnlineExam
@@ -47,6 +59,7 @@ public class FrmOnlineExam extends javax.swing.JFrame {
         if (indexQ == 0) {
             btnPrev.setEnabled(false);
         }
+        this.reportRepo = new ReportRepository();
         setCurrentQ();
         lblTime.setText("Time: 00:00:" + defaultTime);
         this.lblqSize.setText("Question " + (indexQ + 1) + " of " + questionRepo.items.size());
@@ -56,13 +69,13 @@ public class FrmOnlineExam extends javax.swing.JFrame {
                 lblTime.setText("Time: 00:00:" + (time--));
                 if (indexQ == 0) {
                     btnPrev.setEnabled(false);
-                }else{
+                } else {
                     btnPrev.setEnabled(true);
                 }
-                if(indexQ+1==questionRepo.items.size()){
+                if (indexQ + 1 == questionRepo.items.size()) {
                     btnNext.setEnabled(false);
-                }else{
-                     btnNext.setEnabled(true);
+                } else {
+                    btnNext.setEnabled(true);
                 }
                 answereds.put(currentQ.getId(), currentQ);
                 onNext();
@@ -87,6 +100,7 @@ public class FrmOnlineExam extends javax.swing.JFrame {
                 btnNext.setEnabled(false);
                 timer.stop();
                 timer.setRepeats(false);
+                this.generateReport();
                 int dialog = JOptionPane.showOptionDialog(
                         rootPane,
                         "Congratulations⚜",
@@ -114,6 +128,19 @@ public class FrmOnlineExam extends javax.swing.JFrame {
         }
     }
 
+    private void generateReport() {
+        Report r = new Report();
+        r.setUuid(UUID.randomUUID());
+        r.setCreatedAt(StringUtils.currentDateTime);
+        r.setUser(auth);
+        List<Question> arrAnswer = new ArrayList<>(answereds.values());
+        r.setQuestions(arrAnswer);
+        String filename = StringUtils.getCurrentTime;
+        System.out.println("Report: " + r);
+        System.out.println("Report:"+ reportRepo.getClazz());
+        reportRepo.writeItemsToJson(r, "/reports/"+auth.getUsername(),filename);
+    }
+
     private void onPrev() {
         if (indexQ >= 1) {
             lblqSize.setText("Question " + (indexQ) + " of " + questionRepo.items.size());
@@ -122,9 +149,9 @@ public class FrmOnlineExam extends javax.swing.JFrame {
             setCurrentQ();
         }
     }
-    
-    private void saveReport(){
-        
+
+    private void saveReport() {
+
     }
 
     /**
@@ -250,7 +277,7 @@ public class FrmOnlineExam extends javax.swing.JFrame {
     private void listAnswerMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_listAnswerMousePressed
         // TODO add your handling code here:
         System.out.println("SelectedAnswered: " + listAnswer.getSelectedIndex());
-        currentQ.setAnswered(listAnswer.getSelectedIndex()+1);
+        currentQ.setAnswered(listAnswer.getSelectedIndex() + 1);
         this.answereds.put(currentQ.getId(), currentQ);
     }//GEN-LAST:event_listAnswerMousePressed
 

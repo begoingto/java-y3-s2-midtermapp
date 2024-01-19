@@ -16,6 +16,7 @@ import miterapp.internal.AddQuestion;
 import miterapp.internal.ListQuestion;
 import miterapp.internal.ListUser;
 import miterapp.internal.AddUser;
+import miterapp.internal.ListReport;
 import miterapp.repositories.QuestionRepository;
 import miterapp.repositories.UserRepoitory;
 
@@ -159,6 +160,11 @@ public class MainDashboard extends javax.swing.JFrame {
         jMenuBar1.add(jMenu3);
 
         jMenu4.setText("Reports");
+        jMenu4.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jMenu4MouseClicked(evt);
+            }
+        });
         jMenuBar1.add(jMenu4);
 
         setJMenuBar(jMenuBar1);
@@ -254,6 +260,13 @@ public class MainDashboard extends javax.swing.JFrame {
         this.dispose();
         new FrmLogin().setVisible(true);
     }//GEN-LAST:event_mSwitchUserActionPerformed
+
+    private void jMenu4MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jMenu4MouseClicked
+        // TODO add your handling code here:
+        ListReport frm = new ListReport();
+        frm.setName("listReport");
+        this.showChild(frm);
+    }//GEN-LAST:event_jMenu4MouseClicked
 
     public void showChild(JInternalFrame frm) {
         if (frmOpening.contains(frm.getName())) {

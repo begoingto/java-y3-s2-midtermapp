@@ -6,6 +6,7 @@ package miterapp;
 
 import com.formdev.flatlaf.themes.FlatMacLightLaf;
 import java.awt.Image;
+import java.io.IOException;
 import java.nio.file.Paths;
 import java.util.List;
 import javax.swing.ImageIcon;
@@ -14,6 +15,7 @@ import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
 import miterapp.models.User;
 import miterapp.repositories.UserRepoitory;
+import miterapp.utils.FileManagement;
 
 /**
  *
@@ -40,6 +42,15 @@ public class FrmLogin extends javax.swing.JFrame {
         Image newImg = img.getScaledInstance(this.lblRight.getWidth(), lblRight.getHeight(), this.lblRight.getWidth());
         ic = new ImageIcon(newImg);
         this.lblRight.setIcon(ic);
+        if (FileManagement.createDirData()) {
+            System.out.println("Create Data folder for store data");
+        }
+        try {
+            FileManagement.createFile(null, "user.json");
+            FileManagement.createFile(null, "question.json");
+        } catch (IOException ex) {
+            JOptionPane.showMessageDialog(rootPane, "Error: "+ ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+        }
     }
 
     /**
@@ -66,7 +77,6 @@ public class FrmLogin extends javax.swing.JFrame {
         lblshowPwd = new javax.swing.JLabel();
         jPanel8 = new javax.swing.JPanel();
         btnLogin = new javax.swing.JButton();
-        jPanel10 = new javax.swing.JPanel();
         jPanel9 = new javax.swing.JPanel();
         lblRight = new javax.swing.JLabel();
 
@@ -196,22 +206,6 @@ public class FrmLogin extends javax.swing.JFrame {
 
         jPanel1.add(jPanel8);
 
-        jPanel10.setPreferredSize(new java.awt.Dimension(392, 150));
-        jPanel10.setRequestFocusEnabled(false);
-
-        javax.swing.GroupLayout jPanel10Layout = new javax.swing.GroupLayout(jPanel10);
-        jPanel10.setLayout(jPanel10Layout);
-        jPanel10Layout.setHorizontalGroup(
-            jPanel10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 392, Short.MAX_VALUE)
-        );
-        jPanel10Layout.setVerticalGroup(
-            jPanel10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 150, Short.MAX_VALUE)
-        );
-
-        jPanel1.add(jPanel10);
-
         getContentPane().add(jPanel1);
 
         jPanel9.setForeground(new java.awt.Color(255, 153, 255));
@@ -257,6 +251,7 @@ public class FrmLogin extends javax.swing.JFrame {
                 o.setVisible(true);
             }
         }
+        FileManagement.createReportDir(u.getUsername());
         this.dispose();
     }
 
@@ -313,7 +308,6 @@ public class FrmLogin extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JPanel jPanel1;
-    private javax.swing.JPanel jPanel10;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanel4;

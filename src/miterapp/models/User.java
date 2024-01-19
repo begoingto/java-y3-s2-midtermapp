@@ -23,4 +23,13 @@ public class User {
     private String gender;
     private String password;
     private String role;
+
+    public void setUsername(String username) {
+        this.username = username.toLowerCase();
+    }
+
+    public String getUsername() {
+        return username.toLowerCase();
+    }
+    
 }

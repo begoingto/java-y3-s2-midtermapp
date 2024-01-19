@@ -5,6 +5,8 @@
 package miterapp.internal;
 
 import java.util.UUID;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 import javax.swing.JOptionPane;
 import miterapp.models.User;
 import miterapp.repositories.UserRepoitory;
@@ -19,9 +21,8 @@ public class AddUser extends javax.swing.JInternalFrame {
     private ListUser listUser;
     User user = new User();
     private Integer userIndex;
-    private boolean showPwd = false;    
+    private boolean showPwd = false;
     private boolean showConfirm = false;
-
 
     /**
      * Creates new form AddUser
@@ -219,26 +220,39 @@ public class AddUser extends javax.swing.JInternalFrame {
 
     private void btnAddActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddActionPerformed
         // TODO add your handling code here:
-        user.setUsername(this.txtUsername.getText());
-        user.setFullName(this.txtFullName.getText());
-        user.setGender(this.cbGender.getSelectedItem().toString());
-        user.setPassword(this.txtPassword.getText());
-        user.setRole(this.cbRole.getSelectedItem().toString());
-        if (this.user.getUuid() == null) {
-            user.setUuid(UUID.fromString(this.txtUuid.getText()));
-            this.userRepo.addUser(user);
-            this.listUser.addItem(user);
-            JOptionPane.showMessageDialog(rootPane, "You have been add successfully");
-        } else {
-            user.setUuid(UUID.fromString(this.txtUuid.getText()));
-            this.userRepo.updateUser(this.userIndex, user);
-            this.listUser.setUpdateItem(this.userIndex, user);
-            JOptionPane.showMessageDialog(rootPane, "You have been update successfully");
-            this.dispose();
+        if (usernameValid()) {
+            user.setUsername(this.txtUsername.getText());
+            user.setFullName(this.txtFullName.getText());
+            user.setGender(this.cbGender.getSelectedItem().toString());
+            user.setPassword(this.txtPassword.getText());
+            user.setRole(this.cbRole.getSelectedItem().toString());
+            if (this.user.getUuid() == null) {
+                user.setUuid(UUID.fromString(this.txtUuid.getText()));
+                this.userRepo.addUser(user);
+                this.listUser.addItem(user);
+                JOptionPane.showMessageDialog(rootPane, "You have been add successfully");
+            } else {
+                user.setUuid(UUID.fromString(this.txtUuid.getText()));
+                this.userRepo.updateUser(this.userIndex, user);
+                this.listUser.setUpdateItem(this.userIndex, user);
+                JOptionPane.showMessageDialog(rootPane, "You have been update successfully");
+                this.dispose();
+            }
+            this.clearForm();
         }
-        this.clearForm();
         //        this.dispose();
     }//GEN-LAST:event_btnAddActionPerformed
+
+    private boolean usernameValid() {
+        String regex = "^[A-Za-z][A-Za-z0-9_]{5,29}$";
+        Pattern pattern = Pattern.compile(regex);
+        Matcher matcher = pattern.matcher(txtUsername.getText().trim());
+        if (!matcher.matches()) {
+            JOptionPane.showMessageDialog(rootPane, "Username is invalid. It should start with a letter and contain only alphanumeric characters and underscores.", "Validation", JOptionPane.ERROR_MESSAGE);
+            return false;
+        }
+        return true;
+    }
 
     private void btnClearActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnClearActionPerformed
         // TODO add your handling codes here:

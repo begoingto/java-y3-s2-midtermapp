@@ -29,7 +29,8 @@ public class MainService<T> {
     public T object;
     Type mapType = new TypeToken<Map<String, List<T>>>(){}.getType();
     private String filename;
-    private Class<T> clazz;
+    protected Class<T> clazz;
+    private T dataObj;
 
     public MainService(String filename,Class<T> classObj) {
         this.filename = filename;
@@ -62,6 +63,15 @@ public class MainService<T> {
         data.put("data", listObj);
         String dataJson = gson.toJson(data,mapType);
         try (FileWriter writer = new FileWriter(path+"/data/"+ filename +".json")) {
+            writer.write(dataJson);
+        } catch (IOException e) {
+           throw new UnsupportedOperationException("Not supported yet.");
+        }
+    }
+    
+    public void writeItemsToJson(T obj,String dir,String fName){
+        String dataJson = gson.toJson(obj);
+        try (FileWriter writer = new FileWriter(path+"/data"+dir+"/"+ fName +".json")) {
             writer.write(dataJson);
         } catch (IOException e) {
            throw new UnsupportedOperationException("Not supported yet.");
